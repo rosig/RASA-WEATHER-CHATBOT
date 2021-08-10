@@ -97,6 +97,32 @@ nlu:
       - weather information
       - tell me the weather
       - give me weather
+      - Help me please, what's the weather?
+      - I want to know the weather
+      - What is the weather like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
+      - What is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
+      - What is the weather like in [Natal](GPE) in [the morning](TIME), [tomorrow](DATE)?
+      - What is the weather like in [João Pessoa](GPE), in [the afternoon](TIME), [next year](DATE)?
+      - What is the weather like in [Acre](GPE) in [the afternoon](TIME) [next week](DATE)?
+      - What is the climate in [São Paulo](GPE) in [the afternoon](TIME) [tomorrow](DATE)?
+      - What is the weather in [Brasília](GPE), at [night](TIME), [next year](DATE)?
+      - What is the weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
+      - What is the weather in [Itamaracá](GPE) at [night](TIME) [tomorrow](DATE)?
+      - What is the weather like in [Recife](GPE) at [10:00 am](TIME) [tomorrow](DATE)?
+      - What is the weather in [Mato Grosso](GPE) at [22:15 pm](TIME) am [next week](DATE)?
+      - tell me the weather in [Recife](GPE)
+      - Gives me the feel of [Recife](GPE)
+      - I need to know some weather info [tomorrow](DATE) [night](TIME)
+      - Please, weather information at [12:00](TIME)
+      - What's the weather like [next year](DATE)?
+      - I have a question about the climate in [Canadá](GPE)
+      - What is the temperature in [Cuba](GPE)?
+      - About [México](GPE), what is the climate?
+      - What's the weather [tomorrow](DATE) [night](TIME)?
+      - What is the weather like in [Recife](GPE) in [the afternoon](TIME)?
+      - Please, give me the feel of [Recife](GPE)
+      - Please, what is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
+      - Please, what is the weather at [14:00 am](TIME)
 
   # - intent: get_weather_with_location
   #   examples: |
@@ -140,7 +166,7 @@ nlu:
   #     - Sergipe
   #     - Tocantins
   #     - Brasília
-  #     - Recife
+  #     - [Recife](GPE)
   #     - Olinda
   #     - Curitiba
 

@@ -1,6 +1,6 @@
 /venv
 /models
-
+/results
 /events.db
 /events.db-shm
 /events.db-wal
