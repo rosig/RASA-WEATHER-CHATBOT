@@ -1,0 +1,8 @@
+/venv
+/models
+
+/events.db
+/events.db-shm
+/events.db-wal
+/ngrok
+/rasa.db

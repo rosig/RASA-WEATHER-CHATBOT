@@ -1,0 +1,232 @@
+# This files contains your custom actions which can be used to run
+# custom Python code.
+#
+# See this guide on how to implement these action:
+# https://rasa.com/docs/rasa/custom-actions
+
+
+# This is a simple example for a custom action which utters "Hello World!"
+
+# from typing import Any, Text, Dict, List
+#
+import json
+from pathlib import Path
+from typing import Any, Text, Dict, List
+from rasa_sdk import Action, Tracker, FormValidationAction
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.types import DomainDict
+from rasa_sdk.events import SlotSet
+
+import random
+import requests
+import re
+
+class ValidateWeatherForm(FormValidationAction):
+    temp_info = ''
+    temp_feels_like = ''
+
+    def name(self) -> Text:
+        return "validate_get_weather_form"
+
+    def validate_where_info(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[RUN][validate_where_info]")
+        api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(slot_value)
+
+        try:
+          data = requests.get(api_url).json()
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+          # raise SystemExit(e)
+          random_temp = random.randrange(10, 50)
+          data["main"]["temp"] = random_temp
+          data["main"]["feels_like"] = random_temp + random.randrange(-10, 10)
+
+        if (data.get('message') and data['message'] == "city not found"):
+          dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
+          return {"where_info": None}
+        else:
+          self.temp_info = data['main']['temp']
+          self.temp_feels_like = data['main']['feels_like']
+          return {"where_info": slot_value}
+
+    def validate_when_info(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[RUN][validate_when_info]")
+        if slot_value in ['now','current','today', 'right now', 'present moment', 'present'] :
+          return {"when_info": slot_value, "temp_info": "is {}°C, with thermal sensation of {}ºC".format(self.temp_info, self.temp_feels_like)}
+        elif slot_value.lower() in ['next week', 'tomorrow', 'next week', 'next month', 'next year', 'sunday','monday','tuesday','wednesday','thursday','friday','saturday']:
+          random_temp = random.randrange(10, 50)
+          return {"when_info": slot_value, "temp_info": "it will be {}ºC, with thermal sensation of {}ºC".format(random_temp, random_temp + random.randrange(-10, 10))}
+        else:
+          dispatcher.utter_message(text=f"I didn't understand what you said, could you repeat it, please? 😰")
+          return {"when_info": None}
+
+class ActionCheckLocationExistence(Action):
+    places = Path("data/locations.txt").read_text().split("\n")
+
+    def name(self) -> Text:
+      return "action_check_location_existence"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+      print("[RUN][action_check_location_existence]")
+      for blob in tracker.latest_message['entities']:
+        if blob['entity'] == 'location_name':
+          location = blob['value']
+          if location in self.places:
+            return[SlotSet("place_info", location)]
+            
+      return[SlotSet("place_info", None)]
+
+class ActionCheckWeatherEntities(Action):
+    gpe = None
+    date = None
+    time = None
+
+    def name(self) -> Text:
+      return "action_check_weather_entities"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+      print("[RUN][🐍 action_check_weather_entities]")
+      entities = tracker.latest_message['entities']
+
+      if len(entities) > 0:
+        for entity in entities:
+          entityType = entity['entity']
+          entityValue = entity['value']
+
+          if entityType == 'GPE':
+            self.gpe = entityValue
+          elif entityType == 'DATE':
+            self.date = entityValue
+          elif entityType == 'TIME':
+            self.time = entityValue
+      print(self.gpe, self.date, self.time)
+      return[SlotSet("where_info", self.gpe), SlotSet("when_info", self.date), SlotSet("time_info", self.time)]
+
+class ValidateWeatherFormWithLocation(FormValidationAction):
+    places = Path("data/locations.txt").read_text().split("\n")
+    place_info = ''
+
+    def name(self) -> Text:
+        return "validate_get_weather_with_location_form"
+
+    def validate_place_info(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[RUN][validate_place_info]")
+        if slot_value in self.places:
+          self.place_info = slot_value
+          return {"place_info": slot_value}
+        else:
+          return {"place_info": None}
+
+    def validate_time_info(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[RUN][validate_time_info]")
+        random_temp = random.randrange(10, 50)
+        if slot_value in ['now','current','today', 'right now', 'present moment', 'present'] :
+          dispatcher.utter_message(text=f"The weather in {self.place_info}, {slot_value}, is {random_temp}ºC!")
+          return {"time_info": slot_value}
+        elif slot_value.lower() in ['next week', 'tomorrow', 'next week', 'next month', 'next year', 'sunday','monday','tuesday','wednesday','thursday','friday','saturday']:
+          dispatcher.utter_message(text=f"The weather in {self.place_info}, {slot_value}, it will be {random_temp}ºC!")
+          return {"time_info": slot_value}
+        else:
+          dispatcher.utter_message(text=f"I didn't understand what you said, could you repeat it, please? 😰")
+          return {"time_info": None}
+
+class ValidateSetWeatherAlertForm(FormValidationAction):
+    places = Path("data/locations.txt").read_text().split("\n")
+    place_alert = ''
+    date_alert = ''
+    time_day_alert = ''
+
+    def name(self) -> Text:
+        return "validate_set_weather_alert_form"
+
+    def validate_place_alert(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[🐍 RUN][validate_place_alert]")
+        if slot_value in self.places:
+          self.place_alert = slot_value
+          return {"place_alert": slot_value}
+        else:
+          dispatcher.utter_message(text=f"The service is not available at the place you wrote. Please select another place. 🙄")
+          return {"place_alert": None}
+
+    def validate_date_alert(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[🐍 RUN][validate_date_alert]")
+        matched = re.match("^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", slot_value)
+        if bool(matched):
+          self.date_alert = slot_value
+          return {"date_alert": slot_value}
+        else:
+          dispatcher.utter_message(text=f"Invalid date format 🚨")
+          return {"date_alert": None}
+
+    def validate_time_day_alert(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[🐍 RUN][validate_time_day_alert]")
+        matched = re.match(r'^(([01]\d|2[0-3]):([0-5]\d)|24:00)$', slot_value)
+        if bool(matched):
+          self.time_day_alert = slot_value
+          return {"time_day_alert": slot_value}
+        else:
+          dispatcher.utter_message(text=f"Invalid time format 🚨")
+          return {"time_day_alert": None}
+
+    def validate_confirm_alert_form(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[🐍 RUN][validate_confirm_alert_form]")
+
+        if slot_value == 'confirm':
+          dispatcher.utter_message(text=f"Ok, you will receive an alert at {self.time_day_alert}, on {self.date_alert}, about the weather in {self.place_alert}!")
+          return {"confirm_alert_form": 'ok'}
+        elif slot_value == 'cancel':
+          dispatcher.utter_message(text=f"Okay, your alert was successfully cancelled!")
+          return {"confirm_alert_form": 'ok'}
+        elif slot_value == 'change_date':
+          return {"date_alert": None, "confirm_alert_form": None}
+        elif slot_value == 'change_time':
+          return {"time_day_alert": None, "confirm_alert_form": None}
+        elif slot_value == 'change_place':
+          return {"place_alert": None, "confirm_alert_form": None}
