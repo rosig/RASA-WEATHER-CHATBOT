@@ -16,10 +16,40 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.events import SlotSet
-
+import spacy
 import random
 import requests
 import re
+
+class ActionCheckWeatherEntities(Action):
+    gpe = None
+    date = None
+    time = None
+
+    def name(self) -> Text:
+      return "action_check_weather_entities"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+      print("[RUN][action_check_weather_entities]")
+      entities = tracker.latest_message['entities']
+      self.gpe = None
+      self.date = None
+      self.time = None
+
+      if len(entities) > 0:
+        for entity in entities:
+          entityType = entity['entity']
+          entityValue = entity['value']
+
+          if entityType == 'GPE':
+            self.gpe = entityValue
+          elif entityType == 'DATE':
+            self.date = entityValue
+          elif entityType == 'TIME':
+            self.time = entityValue
+
+      print("LOCAL:", self.gpe, "DATA:", self.date, "HORÁRIO:", self.time)
+      return[SlotSet("where_info", self.gpe), SlotSet("when_info", self.date), SlotSet("time_info", self.time)]
 
 class ValidateWeatherForm(FormValidationAction):
     temp_info = ''
@@ -38,20 +68,20 @@ class ValidateWeatherForm(FormValidationAction):
         print("[RUN][validate_where_info]")
         api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(slot_value)
 
-        try:
-          data = requests.get(api_url).json()
-        except requests.exceptions.RequestException as e:  # This is the correct syntax
-          # raise SystemExit(e)
-          random_temp = random.randrange(10, 50)
-          data["main"]["temp"] = random_temp
-          data["main"]["feels_like"] = random_temp + random.randrange(-10, 10)
+        random_temp = random.randrange(10, 50)
+        data = {'main': {'temp': random_temp, 'feels_like': random_temp + random.randrange(-10, 10)}}
 
-        if (data.get('message') and data['message'] == "city not found"):
+        try:
+          self.data = requests.get(api_url).json()
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+          dispatcher.utter_message(text=f"API Error 😰")
+
+        if self.data.get('message') and self.data['cod'] == '404': #place not found
           dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
           return {"where_info": None}
         else:
-          self.temp_info = data['main']['temp']
-          self.temp_feels_like = data['main']['feels_like']
+          self.temp_info = self.data['main']['temp']
+          self.temp_feels_like = self.data['main']['feels_like']
           return {"where_info": slot_value}
 
     def validate_when_info(
@@ -62,14 +92,45 @@ class ValidateWeatherForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         print("[RUN][validate_when_info]")
-        if slot_value in ['now','current','today', 'right now', 'present moment', 'present'] :
-          return {"when_info": slot_value, "temp_info": "is {}°C, with thermal sensation of {}ºC".format(self.temp_info, self.temp_feels_like)}
-        elif slot_value.lower() in ['next week', 'tomorrow', 'next week', 'next month', 'next year', 'sunday','monday','tuesday','wednesday','thursday','friday','saturday']:
-          random_temp = random.randrange(10, 50)
-          return {"when_info": slot_value, "temp_info": "it will be {}ºC, with thermal sensation of {}ºC".format(random_temp, random_temp + random.randrange(-10, 10))}
+
+        dateEntityValue = None
+
+        nlp = spacy.load('en_core_web_sm')
+        doc = nlp(slot_value)
+
+        for entity in doc.ents:
+          if entity.label_ == 'DATE':
+            self.dateEntityValue = entity.text
+
+        if self.dateEntityValue != None:
+          return {"when_info": self.dateEntityValue, "temp_info": "is {}°C, with thermal sensation of {}ºC".format(self.temp_info, self.temp_feels_like)} 
         else:
-          dispatcher.utter_message(text=f"I didn't understand what you said, could you repeat it, please? 😰")
+          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
           return {"when_info": None}
+    
+    def validate_time_info(  
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        print("[RUN][validate_time_info]")
+
+        timeEntityValue = None
+
+        nlp = spacy.load('en_core_web_sm')
+        doc = nlp(slot_value)
+
+        for entity in doc.ents:
+          if entity.label_ == 'TIME':
+            self.timeEntityValue = entity.text
+
+        if self.timeEntityValue != None:
+          return {"time_info": self.timeEntityValue} 
+        else:
+          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
+          return {"time_info": None}
 
 class ActionCheckLocationExistence(Action):
     places = Path("data/locations.txt").read_text().split("\n")
@@ -86,32 +147,6 @@ class ActionCheckLocationExistence(Action):
             return[SlotSet("place_info", location)]
             
       return[SlotSet("place_info", None)]
-
-class ActionCheckWeatherEntities(Action):
-    gpe = None
-    date = None
-    time = None
-
-    def name(self) -> Text:
-      return "action_check_weather_entities"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-      print("[RUN][🐍 action_check_weather_entities]")
-      entities = tracker.latest_message['entities']
-
-      if len(entities) > 0:
-        for entity in entities:
-          entityType = entity['entity']
-          entityValue = entity['value']
-
-          if entityType == 'GPE':
-            self.gpe = entityValue
-          elif entityType == 'DATE':
-            self.date = entityValue
-          elif entityType == 'TIME':
-            self.time = entityValue
-      print(self.gpe, self.date, self.time)
-      return[SlotSet("where_info", self.gpe), SlotSet("when_info", self.date), SlotSet("time_info", self.time)]
 
 class ValidateWeatherFormWithLocation(FormValidationAction):
     places = Path("data/locations.txt").read_text().split("\n")

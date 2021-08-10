@@ -1,35 +1,35 @@
-version: '2.0'
+version: "2.0"
 config:
   store_entities_as_slots: true
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- greet:
-    use_entities: true
-- goodbye:
-    use_entities: true
-- affirm:
-    use_entities: true
-- deny:
-    use_entities: true
-- mood_great:
-    use_entities: true
-- mood_unhappy:
-    use_entities: true
-- bot_challenge:
-    use_entities: true
-- get_weather:
-    use_entities: true
-- get_weather_with_location:
-    use_entities: true
-- set_weather_alert:
-    use_entities: true
+  - greet:
+      use_entities: true
+  - goodbye:
+      use_entities: true
+  - affirm:
+      use_entities: true
+  - deny:
+      use_entities: true
+  - mood_great:
+      use_entities: true
+  - mood_unhappy:
+      use_entities: true
+  - bot_challenge:
+      use_entities: true
+  - get_weather:
+      use_entities: true
+  - get_weather_with_location:
+      use_entities: true
+  - set_weather_alert:
+      use_entities: true
 entities:
-- location_name
-- GPE
-- DATE
-- TIME
+  - location_name
+  - GPE
+  - DATE
+  - TIME
 slots:
   where_info:
     type: rasa.shared.core.slots.TextSlot
@@ -83,88 +83,88 @@ slots:
     influence_conversation: true
 responses:
   utter_greet:
-  - text: Hey! How are you?
+    - text: Hey! How are you?
   utter_cheer_up:
-  - image: https://i.imgur.com/nGF1K8f.jpg
-    text: 'Here is something to cheer you up:'
+    - image: https://i.imgur.com/nGF1K8f.jpg
+      text: "Here is something to cheer you up:"
   utter_did_that_help:
-  - text: Did that help you?
+    - text: Did that help you?
   utter_happy:
-  - text: Great, carry on!
+    - text: Great, carry on!
   utter_goodbye:
-  - text: Bye
+    - text: Bye
   utter_iamabot:
-  - text: I am a bot, powered by Rasa.
+    - text: I am a bot, powered by Rasa.
   utter_ask_where_info:
-  - text: Where do you want to know?
+    - text: Where do you want to know?
   utter_ask_when_info:
-  - text: When (now, today, tomorrow, next week, etc)?
+    - text: When (now, today, tomorrow, next week, etc)?
   utter_slots_weather_values:
-  - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}!
+    - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}!
   utter_ask_place_info:
-  - text: The place you asked is not in our database 🚨, could you ask for another one?
+    - text: The place you asked is not in our database 🚨, could you ask for another one?
   utter_ask_time_info:
-  - text: Do you want to know the weather at what time of day?
+    - text: Do you want to know the weather at what time of day?
   utter_ask_place_alert:
-  - text: Do you want an alert from which place?
+    - text: Do you want an alert from which place?
   utter_ask_date_alert:
-  - text: What date do you want to receive the alert (dd/mm/yyyy)?
+    - text: What date do you want to receive the alert (dd/mm/yyyy)?
   utter_ask_time_day_alert:
-  - text: What time of day can we send the alert (xx:yy)?
+    - text: What time of day can we send the alert (xx:yy)?
   utter_ask_confirm_alert_form:
-  - button_type: vertical
-    buttons:
-    - payload: confirm
-      title: Yes, i want to confirm 👍
-    - payload: cancel
-      title: No, i want to cancel 👎
-    - payload: change_date
-      title: Change date
-    - payload: change_time
-      title: Change time
-    - payload: change_place
-      title: Change place
-    text: Confirm alert schedule?
+    - button_type: vertical
+      buttons:
+        - payload: confirm
+          title: Yes, i want to confirm 👍
+        - payload: cancel
+          title: No, i want to cancel 👎
+        - payload: change_date
+          title: Change date
+        - payload: change_time
+          title: Change time
+        - payload: change_place
+          title: Change place
+      text: Confirm alert schedule?
 actions:
-- utter_greet
-- utter_cheer_up
-- utter_did_that_help
-- utter_happy
-- utter_goodbye
-- utter_iamabot
-- utter_ask_where_info
-- utter_ask_when_info
-- utter_slots_weather_values
-- action_check_location_existence
-- action_check_weather_entities
-- validate_get_weather_form
-- validate_get_weather_with_location_form
-- validate_set_weather_alert_form
+  - utter_greet
+  - utter_cheer_up
+  - utter_did_that_help
+  - utter_happy
+  - utter_goodbye
+  - utter_iamabot
+  - utter_ask_where_info
+  - utter_ask_when_info
+  - utter_slots_weather_values
+  - action_check_location_existence
+  - action_check_weather_entities
+  - validate_get_weather_form
+  - validate_get_weather_with_location_form
+  - validate_set_weather_alert_form
 forms:
   get_weather_form:
     required_slots:
-      temp_info:
-      - type: from_text
-      time_info:
-      - type: from_text
-      when_info:
-      - type: from_text
       where_info:
-      - type: from_text
+        - type: from_text
+      when_info:
+        - type: from_text
+      time_info:
+        - type: from_text
+      temp_info:
+        - type: from_text
   get_weather_with_location_form:
     required_slots:
       place_info:
-      - type: from_text
+        - type: from_text
       time_info:
-      - type: from_text
+        - type: from_text
   set_weather_alert_form:
     required_slots:
       confirm_alert_form:
-      - type: from_text
+        - type: from_text
       date_alert:
-      - type: from_text
+        - type: from_text
       place_alert:
-      - type: from_text
+        - type: from_text
       time_day_alert:
-      - type: from_text
+        - type: from_text
 e2e_actions: []
