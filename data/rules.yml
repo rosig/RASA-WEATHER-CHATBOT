@@ -26,7 +26,25 @@ rules:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
-      - action: utter_slots_weather_values
+      - action: utter_response_get_weather
+      - action: action_restart
+
+  - rule: Activate set weather alert form
+    steps:
+      - intent: set_weather_alert
+      - action: action_check_alert_weather_entities
+      - action: set_weather_alert_form
+      - active_loop: set_weather_alert_form
+
+  - rule: Submit set weather alert form
+    condition:
+      - active_loop: set_weather_alert_form
+    steps:
+      - action: set_weather_alert_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_response_set_alert_weather
       - action: action_restart
 
   # - rule: Activate weather form with location
@@ -41,22 +59,6 @@ rules:
   #     - active_loop: get_weather_with_location_form
   #   steps:
   #     - action: get_weather_with_location_form
-  #     - active_loop: null
-  #     - slot_was_set:
-  #         - requested_slot: null
-  #     - action: action_restart
-
-  # - rule: Activate set weather alert form
-  #   steps:
-  #     - intent: set_weather_alert
-  #     - action: set_weather_alert_form
-  #     - active_loop: set_weather_alert_form
-
-  # - rule: Submit set weather alert form
-  #   condition:
-  #     - active_loop: set_weather_alert_form
-  #   steps:
-  #     - action: set_weather_alert_form
   #     - active_loop: null
   #     - slot_was_set:
   #         - requested_slot: null

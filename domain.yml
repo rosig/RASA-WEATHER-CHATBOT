@@ -25,6 +25,8 @@ intents:
       use_entities: true
   - set_weather_alert:
       use_entities: true
+  - chatbot_actions:
+      use_entities: true
 entities:
   - location_name
   - GPE
@@ -76,11 +78,11 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: true
-  confirm_alert_form:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: true
+  # confirm_alert_form:
+  #   type: rasa.shared.core.slots.TextSlot
+  #   initial_value: null
+  #   auto_fill: true
+  #   influence_conversation: true
 responses:
   utter_greet:
     - text: Hey! How are you?
@@ -99,7 +101,7 @@ responses:
     - text: Where do you want to know?
   utter_ask_when_info:
     - text: When (now, today, tomorrow, next week, etc)?
-  utter_slots_weather_values:
+  utter_response_get_weather:
     - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}!
   utter_ask_place_info:
     - text: The place you asked is not in our database 🚨, could you ask for another one?
@@ -111,20 +113,37 @@ responses:
     - text: What date do you want to receive the alert (dd/mm/yyyy)?
   utter_ask_time_day_alert:
     - text: What time of day can we send the alert (xx:yy)?
-  utter_ask_confirm_alert_form:
-    - button_type: vertical
+  utter_response_set_alert_weather:
+    - text: |
+        ---------------------------------------
+        |   🚨   WEATHER ALERT CONFIRMED   🚨 |
+        ---------------------------------------
+        | Place: {place_alert}
+        | Date: {date_alert}
+        | Time: {time_day_alert}
+        ---------------------------------------
+  utter_select_chatbot_action:
+    - text: "Hi! What's up?"
       buttons:
-        - payload: confirm
-          title: Yes, i want to confirm 👍
-        - payload: cancel
-          title: No, i want to cancel 👎
-        - payload: change_date
-          title: Change date
-        - payload: change_time
-          title: Change time
-        - payload: change_place
-          title: Change place
-      text: Confirm alert schedule?
+        - title: "Get Weather"
+          payload: "/get_weather"
+        - title: "Set Alert"
+          payload: "/set_weather_alert"
+    # - text: Ok, you will receive an alert at {time_day_alert}, on {date_alert}, about the weather in {place_alert}!"
+  # utter_ask_confirm_alert_form:
+  #   - button_type: vertical
+  #     buttons:
+  #       - payload: confirm
+  #         title: Yes, i want to confirm 👍
+  #       - payload: cancel
+  #         title: No, i want to cancel 👎
+  #       - payload: change_date
+  #         title: Change date
+  #       - payload: change_time
+  #         title: Change time
+  #       - payload: change_place
+  #         title: Change place
+  #     text: Confirm alert schedule?
 actions:
   - utter_greet
   - utter_cheer_up
@@ -134,9 +153,11 @@ actions:
   - utter_iamabot
   - utter_ask_where_info
   - utter_ask_when_info
-  - utter_slots_weather_values
+  - utter_response_get_weather
+  - utter_response_set_alert_weather
   - action_check_location_existence
   - action_check_weather_entities
+  - action_check_alert_weather_entities
   - validate_get_weather_form
   - validate_get_weather_with_location_form
   - validate_set_weather_alert_form
@@ -159,8 +180,8 @@ forms:
         - type: from_text
   set_weather_alert_form:
     required_slots:
-      confirm_alert_form:
-        - type: from_text
+      # confirm_alert_form:
+      #   - type: from_text
       date_alert:
         - type: from_text
       place_alert:

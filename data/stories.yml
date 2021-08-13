@@ -45,8 +45,33 @@ stories:
       - slot_was_set:
           - requested_slot: null
       - active_loop: null
-      - action: utter_slots_weather_values
+      - action: utter_response_get_weather
       - action: action_restart
+
+  - story: set weather alert
+    steps:
+      - intent: set_weather_alert
+      - action: action_check_alert_weather_entities
+      - action: set_weather_alert_form
+      - active_loop: set_weather_alert_form
+      - slot_was_set:
+          - place_alert: recife
+      - slot_was_set:
+          - date_alert: 09/11/2021
+      - slot_was_set:
+          - time_day_alert: 07:17
+      #   - slot_was_set:
+      #       - confirm_alert_form: positive
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_response_set_alert_weather
+      - action: action_restart
+
+  - story: chatbot actions
+    steps:
+      - intent: chatbot_actions
+      - action: utter_select_chatbot_action
 
   # - story: get weather with location
   #   steps:
@@ -60,24 +85,6 @@ stories:
   #         - place_info: recife
   #     - slot_was_set:
   #         - time_info: today
-  #     - slot_was_set:
-  #         - requested_slot: null
-  #     - active_loop: null
-  #     - action: action_restart
-
-  # - story: set weather alert
-  #   steps:
-  #     - intent: set_weather_alert
-  #     - action: set_weather_alert_form
-  #     - active_loop: set_weather_alert_form
-  #     - slot_was_set:
-  #         - place_alert: recife
-  #     - slot_was_set:
-  #         - date_alert: 09/11/2021
-  #     - slot_was_set:
-  #         - time_day_alert: 07:17
-  #     - slot_was_set:
-  #         - confirm_alert_form: positive
   #     - slot_was_set:
   #         - requested_slot: null
   #     - active_loop: null

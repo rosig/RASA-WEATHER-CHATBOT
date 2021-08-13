@@ -91,6 +91,22 @@ nlu:
       - am I talking to a bot?
       - am I talking to a human?
 
+  - intent: set_weather_alert
+    examples: |
+      - set weather alert
+      - schedule weather alert
+      - schedule alert
+      - set alert
+      - please help me, set to me an alert weather of [Brasil](GPE) at [night](TIME) [next week](DATE)
+      - set [Cuba](GPE) weather alert at [10 am](TIME) (tomorrow)(DATE)
+      - set [Recife](GPE) temperature alert at [10 am](TIME) (tomorrow)(DATE)
+      - I want to set a weather alert for [tomorrow](DATE) [night](TIME) about [Canada](GPE)
+      - I want to set a climate alert for [tomorrow](DATE) [night](TIME) about [Chile](GPE)
+      - please, set to me a weather alert
+      - I want to set a temperature alert for [tomorrow](DATE) [night](TIME) about [São Paulo](GPE)
+      - make a weather alert for [Pernambuco](GPE) [tomorrow](DATE) [afternoon](TIME)
+      - make a weather alert for [Olinda](GPE) [tomorrow](DATE) [night](TIME)
+
   - intent: get_weather
     examples: |
       - what is the weather?
@@ -123,6 +139,13 @@ nlu:
       - Please, give me the feel of [Recife](GPE)
       - Please, what is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
       - Please, what is the weather at [14:00 am](TIME)
+
+  - intent: chatbot_actions
+    examples: |
+      - what is the chatbot actions
+      - chatbot actions
+      - show me chatbot actions
+      - actions chatbot
 
   # - intent: get_weather_with_location
   #   examples: |
@@ -169,10 +192,3 @@ nlu:
   #     - [Recife](GPE)
   #     - Olinda
   #     - Curitiba
-
-  # - intent: set_weather_alert
-  #   examples: |
-  #     - set weather alert
-  #     - schedule weather alert
-  #     - schedule alert
-  #     - set alert
