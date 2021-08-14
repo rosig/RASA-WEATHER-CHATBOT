@@ -1,8 +1,0 @@
-rasa shell nlu
-rasa shell
-rasa run actions
-
-unzip /mnt/c/Users/rosin/Downloads/ngrok.zip
-/mnt/c/Users/rosin/Downloads/ngrok http 5005
-
-source ./venv/bin/activate
