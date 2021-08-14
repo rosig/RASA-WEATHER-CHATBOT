@@ -9,26 +9,16 @@ intents:
       use_entities: true
   - goodbye:
       use_entities: true
-  - affirm:
-      use_entities: true
-  - deny:
-      use_entities: true
-  - mood_great:
-      use_entities: true
-  - mood_unhappy:
-      use_entities: true
+  - out_of_scope
   - bot_challenge:
       use_entities: true
   - get_weather:
-      use_entities: true
-  - get_weather_with_location:
       use_entities: true
   - set_weather_alert:
       use_entities: true
   - chatbot_actions:
       use_entities: true
 entities:
-  - location_name
   - GPE
   - DATE
   - TIME
@@ -53,11 +43,6 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: true
-  place_info:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: true
   requested_slot:
     type: rasa.shared.core.slots.UnfeaturizedSlot
     initial_value: null
@@ -78,50 +63,38 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: true
-  # confirm_alert_form:
-  #   type: rasa.shared.core.slots.TextSlot
-  #   initial_value: null
-  #   auto_fill: true
-  #   influence_conversation: true
 responses:
   utter_greet:
     - text: Hey! How are you?
-  utter_cheer_up:
-    - image: https://i.imgur.com/nGF1K8f.jpg
-      text: "Here is something to cheer you up:"
-  utter_did_that_help:
-    - text: Did that help you?
-  utter_happy:
-    - text: Great, carry on!
   utter_goodbye:
-    - text: Bye
+    - text: Bye bye 👋
   utter_iamabot:
-    - text: I am a bot, powered by Rasa.
+    - text: I am a bot, powered by Rasa. 🤖
+  utter_please_rephrase:
+    - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  utter_out_of_scope:
+    - text: Sorry, I can't handle that request.
   utter_ask_where_info:
-    - text: Where do you want to know?
+    - text: Do you want to know the weather from where?
   utter_ask_when_info:
-    - text: When (now, today, tomorrow, next week, etc)?
+    - text: When (now, today, tomorrow, next week, 12/12/2021, etc)? 🗓️
   utter_response_get_weather:
     - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}!
-  utter_ask_place_info:
-    - text: The place you asked is not in our database 🚨, could you ask for another one?
   utter_ask_time_info:
-    - text: Do you want to know the weather at what time of day?
+    - text: The weather at what time of day? ⏰
   utter_ask_place_alert:
     - text: Do you want an alert from which place?
   utter_ask_date_alert:
-    - text: What date do you want to receive the alert (dd/mm/yyyy)?
+    - text: What date do you want to receive the alert (dd/mm/yyyy)? 🗓️
   utter_ask_time_day_alert:
-    - text: What time of day can we send the alert (xx:yy)?
+    - text: What time of day can we send the alert? ⏰
   utter_response_set_alert_weather:
     - text: |
-        ---------------------------------------
-        |   🚨   WEATHER ALERT CONFIRMED   🚨 |
-        ---------------------------------------
-        | Place: {place_alert}
-        | Date: {date_alert}
-        | Time: {time_day_alert}
-        ---------------------------------------
+        ✅ Okay, weather alert scheduled successfully
+        🚨 The alert about {place_alert} will be sent on the date and time below
+        🗓️ Date: {date_alert}
+        ⏰ Time: {time_day_alert}
+        See you later!
   utter_select_chatbot_action:
     - text: "Hi! What's up?"
       buttons:
@@ -129,26 +102,9 @@ responses:
           payload: "/get_weather"
         - title: "Set Alert"
           payload: "/set_weather_alert"
-    # - text: Ok, you will receive an alert at {time_day_alert}, on {date_alert}, about the weather in {place_alert}!"
-  # utter_ask_confirm_alert_form:
-  #   - button_type: vertical
-  #     buttons:
-  #       - payload: confirm
-  #         title: Yes, i want to confirm 👍
-  #       - payload: cancel
-  #         title: No, i want to cancel 👎
-  #       - payload: change_date
-  #         title: Change date
-  #       - payload: change_time
-  #         title: Change time
-  #       - payload: change_place
-  #         title: Change place
-  #     text: Confirm alert schedule?
+
 actions:
   - utter_greet
-  - utter_cheer_up
-  - utter_did_that_help
-  - utter_happy
   - utter_goodbye
   - utter_iamabot
   - utter_ask_where_info
@@ -172,16 +128,8 @@ forms:
         - type: from_text
       temp_info:
         - type: from_text
-  get_weather_with_location_form:
-    required_slots:
-      place_info:
-        - type: from_text
-      time_info:
-        - type: from_text
   set_weather_alert_form:
     required_slots:
-      # confirm_alert_form:
-      #   - type: from_text
       date_alert:
         - type: from_text
       place_alert:
