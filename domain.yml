@@ -74,9 +74,13 @@ responses:
   utter_happy:
     - text: Great, i am happy to help UFPE' students to know more PLN content, carry on!
   utter_goodbye:
-    - text: Bye, bye, have a nice day!
+    - text: Bye, bye, have a nice day! 👋
   utter_iamabot:
-    - text: I am a bot, created by Rasa and improved by Rosinaldo, Juliano and Luciano. Unfortanaly, my domain is only about weather. I am not like GPT-3.
+    - text: I am a bot, created by Rasa and improved by Rosinaldo, Juliano and Luciano. Unfortanaly, my domain is only about weather. I am not like GPT-3. 🤖
+  utter_please_rephrase:
+    - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  utter_out_of_scope:
+    - text: Sorry, I can't handle that request.
   utter_ask_where_info:
     - text: Do you want to know the weather from where?
   utter_ask_when_info:
