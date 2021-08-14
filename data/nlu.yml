@@ -11,6 +11,7 @@ nlu:
       - good morning
       - good evening
       - moin
+      - yo
       - hey there
       - let's go
       - hey dude
@@ -36,6 +37,7 @@ nlu:
 
 
   - intent: affirm
+  - intent: out_of_scope
     examples: |
       - yes
       - y
@@ -104,6 +106,23 @@ nlu:
       - very sad
       - unhappy
       - not good
+      - I want to order food
+      - What is 2 + 2?
+      - Who's the US President?
+      - i love you
+      - buy a car
+      - 3 + 34 * 100
+      - Where is Brazil?
+      - What color is mars?
+      - What is a house?
+      - Do I want to make an appointment?
+      - What is the movie?
+      - Give me a movie?
+      - Butterflies are colorful.
+      - Who owns PSG?
+      - God is love
+      - Make a reservation
+      - bad day
       - not very good
       - extremly sad
       - so saad
@@ -124,6 +143,7 @@ nlu:
       - are you a alan turing machine?
       - i am in a turing test?
       - Do you understand me?
+      - i know you are a bot
 
 
   - intent: set_weather_alert
@@ -164,11 +184,11 @@ nlu:
       - What is the weather like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
       - What is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
       - What is the weather like in [Natal](GPE) in [the morning](TIME), [tomorrow](DATE)?
-      - What is the weather like in [João Pessoa](GPE), in [the afternoon](TIME), [next year](DATE)?
+      - weather like in [João Pessoa](GPE), in [the afternoon](TIME), [next year](DATE)?
       - What is the weather like in [Acre](GPE) in [the afternoon](TIME) [next week](DATE)?
       - What is the climate in [São Paulo](GPE) in [the afternoon](TIME) [tomorrow](DATE)?
       - What is the weather in [Brasília](GPE), at [night](TIME), [next year](DATE)?
-      - What is the weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
+      - weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
       - What is the weather in [Itamaracá](GPE) at [night](TIME) [tomorrow](DATE)?
       - What is the weather like in [Recife](GPE) at [10:00 am](TIME) [tomorrow](DATE)?
       - What is the weather in [Mato Grosso](GPE) at [22:15 pm](TIME) am [next week](DATE)?
@@ -192,49 +212,5 @@ nlu:
       - chatbot actions
       - show me chatbot actions
       - actions chatbot
-
-  # - intent: get_weather_with_location
-  #   examples: |
-  #     - what is the weather in [PLACE]{"entity": "location_name"}?
-  #     - weather in [PLACE]{"entity": "location_name"}?
-  #     - i want to know the weather in [PLACE]{"entity": "location_name"}
-  #     - weather information of [PLACE]{"entity": "location_name"}
-  #     - tell me the weather in [PLACE]{"entity": "location_name"}
-  #     - [PLACE]{"entity": "location_name"} weather
-  #     - weather [PLACE]{"entity": "location_name"}
-  #     - weather in [PLACE]{"entity": "location_name"} location
-  #     - [PLACE]{"entity": "location_name"} location weather
-
-  # - lookup: location_name
-  #   examples: |
-  #     - Acre
-  #     - Alagoas
-  #     - Amapá
-  #     - Amazonas
-  #     - Bahia
-  #     - Ceará
-  #     - Distrito Federal
-  #     - Espírito Santo
-  #     - Goiás
-  #     - Maranhão
-  #     - Mato Grosso
-  #     - Mato Grosso do Sul
-  #     - Minas Gerais
-  #     - Pará
-  #     - Paraíba
-  #     - Paraná
-  #     - Pernambuco
-  #     - Piauí
-  #     - Rio de Janeiro
-  #     - Rio Grande do Norte
-  #     - Rio Grande do Sul
-  #     - Rondônia
-  #     - Roraima
-  #     - Santa Catarina
-  #     - São Paulo
-  #     - Sergipe
-  #     - Tocantins
-  #     - Brasília
-  #     - [Recife](GPE)
-  #     - Olinda
-  #     - Curitiba
+      - i want to know the chatbot actions
+      - actions of chatbot

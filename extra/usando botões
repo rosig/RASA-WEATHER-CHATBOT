@@ -1,0 +1,34 @@
+domain
+
+slots:
+  # confirm_alert_form:
+  #   type: rasa.shared.core.slots.TextSlot
+  #   initial_value: null
+  #   auto_fill: true
+  #   influence_conversation: true
+
+responses:
+  # utter_ask_confirm_alert_form:
+  #   - button_type: vertical
+  #     buttons:
+  #       - payload: confirm
+  #         title: Yes, i want to confirm 👍
+  #       - payload: cancel
+  #         title: No, i want to cancel 👎
+  #       - payload: change_date
+  #         title: Change date
+  #       - payload: change_time
+  #         title: Change time
+  #       - payload: change_place
+  #         title: Change place
+  #     text: Confirm alert schedule?
+
+  forms:
+        # confirm_alert_form:
+      #   - type: from_text
+
+
+stories
+
+#   - slot_was_set:
+#       - confirm_alert_form: positive

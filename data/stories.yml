@@ -1,35 +1,10 @@
 version: "2.0"
 
 stories:
-  - story: happy path
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: mood_great
-      - action: utter_happy
-
-  - story: sad path 1
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: mood_unhappy
-      - action: utter_cheer_up
-      - action: utter_did_that_help
-      - intent: affirm
-      - action: utter_happy
-
-  - story: sad path 2
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: mood_unhappy
-      - action: utter_cheer_up
-      - action: utter_did_that_help
-      - intent: deny
-      - action: utter_goodbye
-
   - story: get weather
     steps:
+      - intent: greet
+      - action: utter_greet
       - intent: get_weather
       - action: action_check_weather_entities
       - action: get_weather_form
@@ -50,6 +25,8 @@ stories:
 
   - story: set weather alert
     steps:
+      - intent: greet
+      - action: utter_greet
       - intent: set_weather_alert
       - action: action_check_alert_weather_entities
       - action: set_weather_alert_form
@@ -60,8 +37,6 @@ stories:
           - date_alert: 09/11/2021
       - slot_was_set:
           - time_day_alert: 07:17
-      #   - slot_was_set:
-      #       - confirm_alert_form: positive
       - slot_was_set:
           - requested_slot: null
       - active_loop: null
@@ -72,20 +47,3 @@ stories:
     steps:
       - intent: chatbot_actions
       - action: utter_select_chatbot_action
-
-  # - story: get weather with location
-  #   steps:
-  #     - intent: get_weather_with_location
-  #       entities:
-  #         - location_name: "Recife"
-  #     - action: action_check_location_existence
-  #     - action: get_weather_with_location_form
-  #     - active_loop: get_weather_with_location_form
-  #     - slot_was_set:
-  #         - place_info: recife
-  #     - slot_was_set:
-  #         - time_info: today
-  #     - slot_was_set:
-  #         - requested_slot: null
-  #     - active_loop: null
-  #     - action: action_restart

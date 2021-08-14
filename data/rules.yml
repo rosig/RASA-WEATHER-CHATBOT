@@ -11,6 +11,16 @@ rules:
       - intent: bot_challenge
       - action: utter_iamabot
 
+  - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+    steps:
+      - intent: nlu_fallback
+      - action: utter_please_rephrase
+
+  - rule: out-of-scope
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
   - rule: Activate weather form
     steps:
       - intent: get_weather
@@ -46,20 +56,3 @@ rules:
           - requested_slot: null
       - action: utter_response_set_alert_weather
       - action: action_restart
-
-  # - rule: Activate weather form with location
-  #   steps:
-  #     - intent: get_weather_with_location
-  #     - action: action_check_location_existence
-  #     - action: get_weather_with_location_form
-  #     - active_loop: get_weather_with_location_form
-
-  # - rule: Submit weather form with location
-  #   condition:
-  #     - active_loop: get_weather_with_location_form
-  #   steps:
-  #     - action: get_weather_with_location_form
-  #     - active_loop: null
-  #     - slot_was_set:
-  #         - requested_slot: null
-  #     - action: action_restart
