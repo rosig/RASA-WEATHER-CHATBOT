@@ -66,9 +66,6 @@ slots:
 responses:
   utter_greet:
     - text: Hey! How are you?
-  utter_cheer_up:
-    # - image: https://i.imgur.com/nGF1K8f.jpg
-      text: "I know this feeling, but don't worry, after coronavirus pandemic everything will get better!"
   utter_did_that_help:
     - text: Did that help you?
   utter_happy:
