@@ -87,16 +87,16 @@ responses:
   utter_greet:
     - text: Hey! How are you?
   utter_cheer_up:
-    - image: https://i.imgur.com/nGF1K8f.jpg
-      text: "Here is something to cheer you up:"
+    # - image: https://i.imgur.com/nGF1K8f.jpg
+      text: "I know this feeling, but don't worry, after coronavirus pandemic everything will get better!"
   utter_did_that_help:
     - text: Did that help you?
   utter_happy:
-    - text: Great, carry on!
+    - text: Great, i am happy to help UFPE' students to know more PLN content, carry on!
   utter_goodbye:
-    - text: Bye
+    - text: Bye, bye, have a nice day!
   utter_iamabot:
-    - text: I am a bot, powered by Rasa.
+    - text: I am a bot, created by Rasa and improved by Rosinaldo, Juliano and Luciano. Unfortanaly, my domain is only about weather. I am not like GPT-3.
   utter_ask_where_info:
     - text: Where do you want to know?
   utter_ask_when_info:
