@@ -6,6 +6,7 @@ nlu:
       - hey
       - hello
       - hi
+      - heyo
       - hello there
       - good morning
       - good evening
@@ -30,31 +31,55 @@ nlu:
       - see you around
       - bye bye
       - see you later
+      - xoxoxo
+      - see you in soon
+
 
   - intent: affirm
     examples: |
       - yes
       - y
+      - yep
       - indeed
       - of course
       - that sounds good
       - correct
+      - exact
+      - exactly
+      - absolutely
+      - oh right
+      - right
+      - well done
+      - sure
+      - of sure
+      - okay
+      - ok
+
 
   - intent: deny
     examples: |
       - no
       - n
+      - nop
+      - nope
+      - neither
       - never
       - I don't think so
       - don't like that
       - no way
       - not really
+      - by no means
+      - noway
+      - non
+      - never mind
+      - forget it
 
   - intent: mood_great
     examples: |
       - perfect
       - great
       - amazing
+      - awesome
       - feeling like a king
       - wonderful
       - I am feeling very good
@@ -83,6 +108,10 @@ nlu:
       - extremly sad
       - so saad
       - so sad
+      - i am disconsolate
+      - i am frustated
+      - i am not happy
+      - i dont want to talk
 
   - intent: bot_challenge
     examples: |
@@ -90,6 +119,12 @@ nlu:
       - are you a human?
       - am I talking to a bot?
       - am I talking to a human?
+      - are you really intelligent?
+      - are you really clever?
+      - are you a alan turing machine?
+      - i am in a turing test?
+      - Do you understand me?
+
 
   - intent: set_weather_alert
     examples: |
@@ -97,15 +132,26 @@ nlu:
       - schedule weather alert
       - schedule alert
       - set alert
+      - set alert for me?
+      - configure alert
+      - configure weather alert
+      - remember me with an alert
+      - create weather alert
+      - create alert
+      - build alert
+      - could you create an alert to me?
+      - i would like to set an alert
       - please help me, set to me an alert weather of [Brasil](GPE) at [night](TIME) [next week](DATE)
       - set [Cuba](GPE) weather alert at [10 am](TIME) (tomorrow)(DATE)
+      - configure [Manaus](GPE) weather alert at [12 am](TIME) (today)(DATE)
       - set [Recife](GPE) temperature alert at [10 am](TIME) (tomorrow)(DATE)
-      - I want to set a weather alert for [tomorrow](DATE) [night](TIME) about [Canada](GPE)
+      - may you set a weather alert for [today](DATE) [11 pm](TIME) about [Canada](GPE)
+      - I want to set a weather alert for [next week](DATE) [night](TIME) about [Canada](GPE)
       - I want to set a climate alert for [tomorrow](DATE) [night](TIME) about [Chile](GPE)
       - please, set to me a weather alert
       - I want to set a temperature alert for [tomorrow](DATE) [night](TIME) about [São Paulo](GPE)
       - make a weather alert for [Pernambuco](GPE) [tomorrow](DATE) [afternoon](TIME)
-      - make a weather alert for [Olinda](GPE) [tomorrow](DATE) [night](TIME)
+      - make a weather alert for [Olinda](GPE) [monday](DATE) [night](TIME)
 
   - intent: get_weather
     examples: |
