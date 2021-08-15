@@ -39,6 +39,7 @@ nlu:
   - intent: out_of_scope
     examples: |
       - my day was horrible
+      - I hate you, faggot
       - I am sad
       - I don't feel very well
       - I am disappointed
@@ -91,6 +92,7 @@ nlu:
   - intent: set_weather_alert
     examples: |
       - set weather alert
+      - could you please, configure out an alert to me?
       - schedule weather alert
       - schedule alert
       - set alert
@@ -123,6 +125,7 @@ nlu:
       - give me weather
       - Help me please, what's the weather?
       - I want to know the weather
+      - Today I will make a trip, so I want to know what is the temperature in [Alaska](GPE), [tomorrow](DATE) at [10 am](TIME) 
       - What is the weather like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
       - What is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
       - What is the weather like in [Natal](GPE) in [the morning](TIME), [tomorrow](DATE)?
@@ -147,6 +150,7 @@ nlu:
       - Please, give me the feel of [Recife](GPE)
       - Please, what is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
       - Please, what is the weather at [14:00 am](TIME)
+      - Please, help me, what is the weather in [Pernambuco](GPE) at [morning](TIME) [next week](DATE)?
 
   - intent: chatbot_actions
     examples: |
