@@ -58,6 +58,16 @@ class ValidateWeatherForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_get_weather_form"
 
+    def requestAPI(self, placeName):
+      api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(placeName)
+        
+      try:
+        data = requests.get(api_url).json()
+      except requests.exceptions.RequestException as e:  # This is the correct syntax
+        dispatcher.utter_message(text=f"API Error 😰")
+
+      return data
+
     def validate_where_info(
         self,
         slot_value: Any,
@@ -66,24 +76,48 @@ class ValidateWeatherForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         print("[RUN][validate_where_info]")
-        api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(slot_value)
 
-        random_temp = random.randrange(10, 50)
-        data = {'main': {'temp': random_temp, 'feels_like': random_temp + random.randrange(-10, 10)}}
+        print(slot_value)
 
-        try:
-          data = requests.get(api_url).json()
-        except requests.exceptions.RequestException as e:  # This is the correct syntax
-          dispatcher.utter_message(text=f"API Error 😰")
+        data = self.requestAPI(slot_value)
+
+        # random_temp = random.randrange(10, 50)
+        # data = {'main': {'temp': random_temp, 'feels_like': random_temp + random.randrange(-10, 10)}}
 
         if data.get('message') and data['cod'] == '404': #place not found
+          print(0)
+          placeEntityValue = None
+
+          print("tokeziner")
+          nlp = spacy.load('en_core_web_sm')
+          doc = nlp(slot_value)
+
+          for entity in doc.ents:
+            if entity.label_ == 'GPE':
+              print("achou GPE")
+              print(entity.text, entity.label_)
+              placeEntityValue = entity.text
+
+          if placeEntityValue != None:
+            data = self.requestAPI(placeEntityValue)
+            
+            if data.get('message') and data['cod'] == '404':
+              print(1)
+              dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
+              return {"where_info": None}
+
+            self.temp_info = data['main']['temp']
+            self.temp_feels_like = data['main']['feels_like']
+            return {"where_info": placeEntityValue}
+          
+          print(2)
           dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
           return {"where_info": None}
         else:
           self.temp_info = data['main']['temp']
           self.temp_feels_like = data['main']['feels_like']
           return {"where_info": slot_value}
-
+       
     def validate_when_info(
         self,
         slot_value: Any,
@@ -155,7 +189,7 @@ class SetWeatherAlertActionCheckEntities(Action):
           elif entityType == 'TIME':
             time = entityValue
 
-      print("🚨 LOCAL:", gpe, "DATA:", date, "HORÁRIO:", time, "CONFIRM:", confirm)
+      print("🚨 LOCAL:", gpe, "DATA:", date, "HORÁRIO:", time)
       return[SlotSet("place_alert", gpe), SlotSet("date_alert", date), SlotSet("time_day_alert", time)]
 
 class ValidateSetAlertWeatherForm(FormValidationAction):
