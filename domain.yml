@@ -83,7 +83,7 @@ responses:
   utter_ask_when_info:
     - text: When (now, today, tomorrow, next week, 12/12/2021, etc)? 🗓️
   utter_response_get_weather:
-    - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}!
+    - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}! 🌡
   utter_ask_time_info:
     - text: The weather at what time of day? ⏰
   utter_ask_place_alert:
@@ -119,7 +119,6 @@ actions:
   - action_check_weather_entities
   - action_check_alert_weather_entities
   - validate_get_weather_form
-  - validate_get_weather_with_location_form
   - validate_set_weather_alert_form
 forms:
   get_weather_form:
