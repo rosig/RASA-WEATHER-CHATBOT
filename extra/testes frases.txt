@@ -14,6 +14,7 @@ Hi, my name is João, in Curitiba, what is the weather tomorrow at morning?
 Please help me, how is the weather in Curitiba this morning?
 Please I want to know the weather in Brazil at 10 am tomorrow
 what is the weather in Recife at night?
+tell me, what is the climate in recife this night
 
 Frase SET OK
 please help me, set to me an alert weather in Brazil at night next week
