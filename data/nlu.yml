@@ -128,7 +128,7 @@ nlu:
       - give me weather
       - Help me please, what's the weather?
       - I want to know the weather
-      Hi, my name is João, in [Rio de Janeiro](GPE), what is the weather at [10:12 pm](DATE), [now](TIME)?
+      - Hi, my name is João, in [Rio de Janeiro](GPE), what is the weather at [10:12 pm](DATE), [now](TIME)?
       - Today I will make a trip, so I want to know what is the temperature in [Alaska](GPE), [tomorrow](DATE) at [10 am](TIME) 
       - What is the weather like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
       - What is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
