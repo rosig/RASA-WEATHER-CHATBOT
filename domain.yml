@@ -65,7 +65,7 @@ slots:
     influence_conversation: true
 responses:
   utter_greet:
-    - text: Hey! How are you?
+    - text: Hey! How can I help you?
   utter_did_that_help:
     - text: Did that help you?
   utter_happy:
@@ -79,7 +79,7 @@ responses:
   utter_out_of_scope:
     - text: Sorry, I can't handle that request.
   utter_ask_where_info:
-    - text: Do you want to know the weather from where?
+    - text: If you told me where, I dont understand it, or it is out of my scope of localizations. Do you want to know the weather from where?
   utter_ask_when_info:
     - text: When (now, today, tomorrow, next week, 12/12/2021, etc)? 🗓️
   utter_response_get_weather:
