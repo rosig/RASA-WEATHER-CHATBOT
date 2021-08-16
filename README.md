@@ -16,6 +16,8 @@ To run in a telegram bot, you need to create a bot with the @botfather channel i
 
 ./ngrok http 5005 
 
+rasa run
+
 this command with generate a http forwarding, so put it, in creadentials.yml, 
 
 telegram:
