@@ -41,6 +41,9 @@ nlu:
       - my day was horrible
       - I hate you, faggot
       - I am sad
+      - Im good
+      - I m good
+      - I m well
       - I don't feel very well
       - I am disappointed
       - super sad
@@ -125,6 +128,7 @@ nlu:
       - give me weather
       - Help me please, what's the weather?
       - I want to know the weather
+      Hi, my name is João, in [Rio de Janeiro](GPE), what is the weather at [10:12 pm](DATE), [now](TIME)?
       - Today I will make a trip, so I want to know what is the temperature in [Alaska](GPE), [tomorrow](DATE) at [10 am](TIME) 
       - What is the weather like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
       - What is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
@@ -138,6 +142,7 @@ nlu:
       - What is the weather like in [Recife](GPE) at [10:00 am](TIME) [tomorrow](DATE)?
       - What is the weather in [Mato Grosso](GPE) at [22:15 pm](TIME) am [next week](DATE)?
       - tell me the weather in [Recife](GPE)
+      - tell me, what is the climate in [Recife](GPE) this [night](TIME)
       - Gives me the feel of [Recife](GPE)
       - I need to know some weather info [tomorrow](DATE) [night](TIME)
       - Please, weather information at [12:00](TIME)
@@ -146,10 +151,14 @@ nlu:
       - What is the temperature in [Cuba](GPE)?
       - About [México](GPE), what is the climate?
       - What's the weather [tomorrow](DATE) [night](TIME)?
-      - What is the weather like in [Recife](GPE) in [the afternoon](TIME)?
+      - what is the weather in [Recife](GPE) at [night](TIME)?
+      - What is the weather like in [Recife](GPE) in the [afternoon](TIME)?
       - Please, give me the feel of [Recife](GPE)
+      - Hi, my name is João, in [Curitiba](GPE), what is the weather at [10:12 pm](TIME), [tomorrow](DATE)?
+      - Hey, I will have a test in [Seabra](GPE), what is the weather at [10:12 pm](TIME) [tomorrow](DATE)?
       - Please, what is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
       - Please, what is the weather at [14:00 am](TIME)
+      - Please, help me, what is the weather in [Curitiba](GPE) at [night](TIME) [today](DATE)?
       - Please, help me, what is the weather in [Pernambuco](GPE) at [morning](TIME) [next week](DATE)?
 
   - intent: chatbot_actions
