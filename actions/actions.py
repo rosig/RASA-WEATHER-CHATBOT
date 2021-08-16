@@ -31,13 +31,23 @@ class GetWeatherActionCheckEntities(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
       print("🐍 [RUN][action_check_weather_entities]")
-      entities = tracker.latest_message['entities']
+
       self.gpe = None
       self.date = None
       self.time = None
 
+      entities = tracker.latest_message['entities']
+      textInput = tracker.latest_message['text']
+
+      print(textInput)
+      textInput = textInput.lower()
+
+      # Special cases need to be done before
+      # if slot_value.contains('now')  
+    
       if len(entities) > 0:
         for entity in entities:
+          
           entityType = entity['entity']
           entityValue = entity['value']
 
@@ -47,6 +57,24 @@ class GetWeatherActionCheckEntities(Action):
             self.date = entityValue
           elif entityType == 'TIME':
             self.time = entityValue
+
+    #se o extrator ainda assim nao pegou(verifica variavel se estao com none)
+      if ' this' in textInput and self.date == None:
+        self.date = "today"
+      if ' tonight' in textInput or'tonight ' in textInput and self.time == None and self.date == None:
+        self.date = "today"
+        self.time = "evening"
+      if ' night' in textInput or 'night ' in textInput and self.time == None: #pode ser a noite de outro dia...
+        self.time = "evening"
+      if ' night' in textInput or 'night ' in textInput and self.time == None and self.date == None: #senao achei nem o dia, assuma q é hoje
+        self.date = "today"
+        self.time = "evening"
+      if ' now' in textInput and self.time == None and self.date == None :  
+        #deixar com espaco pois tem now e know... que pode dá pau
+        self.date = "today"
+        self.time = "afternoon" # forcar sair a tarde
+        # o ideal seria ter um outro tipo de utter_response somente com date e where. Pois na frase nao tem time... mas podemos supor que sempre que nao vier será a tarde...
+
 
       print("🚨 LOCAL:", self.gpe, "DATA:", self.date, "HORÁRIO:", self.time)
       return[SlotSet("where_info", self.gpe), SlotSet("when_info", self.date), SlotSet("time_info", self.time)]
@@ -77,7 +105,8 @@ class ValidateWeatherForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         print("[RUN][validate_where_info]")
 
-        print(slot_value)
+        # slot_value = "Hum, " + slot_value
+        # print(slot_value)
 
         data = self.requestAPI(slot_value)
 
@@ -88,7 +117,7 @@ class ValidateWeatherForm(FormValidationAction):
           print(0)
           placeEntityValue = None
 
-          print("tokeziner")
+          print("tokeziner where")
           nlp = spacy.load('en_core_web_sm')
           doc = nlp(slot_value)
 
@@ -129,6 +158,15 @@ class ValidateWeatherForm(FormValidationAction):
 
         dateEntityValue = None
 
+        print(slot_value)
+        print(type(slot_value))
+
+          
+        print("tokeziner when")
+
+        # print(slot_value)
+        # print(type(slot_value))
+
         nlp = spacy.load('en_core_web_sm')
         doc = nlp(slot_value)
 
@@ -139,7 +177,7 @@ class ValidateWeatherForm(FormValidationAction):
         if dateEntityValue != None:
           return {"when_info": dateEntityValue, "temp_info": "is {}°C, with feels like of {}ºC".format(self.temp_info, self.temp_feels_like)} 
         else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
+          dispatcher.utter_message(text=f"I didn't understand what you said 1 😰")
           return {"when_info": None}
     
     def validate_time_info(  
@@ -153,6 +191,12 @@ class ValidateWeatherForm(FormValidationAction):
 
         timeEntityValue = None
 
+        # slot_value = "Hum, " + slot_value
+       
+        # print(slot_value)
+        # print(type(slot_value))
+
+
         nlp = spacy.load('en_core_web_sm')
         doc = nlp(slot_value)
 
@@ -163,7 +207,7 @@ class ValidateWeatherForm(FormValidationAction):
         if timeEntityValue != None:
           return {"time_info": timeEntityValue} 
         else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
+          dispatcher.utter_message(text=f"I didn't understand what you said 2 😰")
           return {"time_info": None}
 
 class SetWeatherAlertActionCheckEntities(Action):
@@ -259,7 +303,7 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
           self.date_alert = dateEntityValue
           return {"date_alert": dateEntityValue}
         else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
+          dispatcher.utter_message(text=f"I didn't understand what you said 3😰")
           return {"date_alert": None}
 
         # matched = re.match("^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", slot_value)
@@ -292,7 +336,7 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
           self.time_day_alert = timeEntityValue
           return {"time_day_alert": timeEntityValue} 
         else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 😰")
+          dispatcher.utter_message(text=f"I didn't understand what you said 4 😰")
           return {"time_day_alert": None}
 
         # matched = re.match(r'^(([01]\d|2[0-3]):([0-5]\d)|24:00)$', slot_value)
