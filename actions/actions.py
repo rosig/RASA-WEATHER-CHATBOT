@@ -41,9 +41,6 @@ class GetWeatherActionCheckEntities(Action):
 
       print(textInput)
       textInput = textInput.lower()
-
-      # Special cases need to be done before
-      # if slot_value.contains('now')  
     
       if len(entities) > 0:
         for entity in entities:
@@ -58,19 +55,22 @@ class GetWeatherActionCheckEntities(Action):
           elif entityType == 'TIME':
             self.time = entityValue
 
-    #se o extrator ainda assim nao pegou(verifica variavel se estao com none)
+    #se o extrator ainda assim nao pegou para casos especiais (verifica variavel se estao com none)
       if ' this' in textInput and self.date == None:
         self.date = "today"
-      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None:
-        self.date = "tomorrow"
       if ' tonight' in textInput or 'tonight ' in textInput and self.time == None and self.date == None:
         self.date = "today"
         self.time = "evening"
+      if ' midnight' in textInput or 'midnight ' in textInput and self.time == None: #pode ser a noite de outro dia...
+        self.time = "00:01 AM"
+        self.date = "tomorrow"
       if ' night' in textInput or 'night ' in textInput and self.time == None: #pode ser a noite de outro dia...
         self.time = "evening"
       if ' night' in textInput or 'night ' in textInput and self.time == None and self.date == None: #senao achei nem o dia, assuma q é hoje
         self.date = "today"
         self.time = "evening"
+      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None: #caso onde se tem 10 pm tomorrow, como uma entidade só ai separa
+        self.date = "tomorrow"
       if ' now' in textInput or ' now' in textInput and self.time == None and self.date == None :  
         #deixar com espaco pois tem now e know... que pode dá pau
         self.date = "today"
@@ -158,7 +158,7 @@ class ValidateWeatherForm(FormValidationAction):
 
         dateEntityValue = None
 
-        slot_value = "Hum, " + slot_value
+        slot_value = "hum, " + slot_value
         print("tokeziner when")
         print(slot_value)
         print(type(slot_value))
@@ -173,12 +173,13 @@ class ValidateWeatherForm(FormValidationAction):
           if entity.label_ == 'DATE':
             dateEntityValue = entity.text
 
+      #special cases
         if dateEntityValue == None:
           if 'current' in slot_value or ' current' in slot_value or 'current ' in slot_value or ' current ' in slot_value:
             dateEntityValue = 'current'
           if 'today' in slot_value or ' today' in slot_value or 'today ' in slot_value or ' today ' in slot_value:
             dateEntityValue = 'today'
-          if 'now' in slot_value or ' now' in slot_value or 'now ' in slot_value or ' now ' in slot_value:
+          if ' now' in slot_value or 'now ' in slot_value or ' now ' in slot_value:
             dateEntityValue = 'now'
           if 'right now' in slot_value or ' right now' in slot_value or 'right now ' in slot_value or ' right now ' in slot_value:
             dateEntityValue = 'right now'
@@ -213,6 +214,28 @@ class ValidateWeatherForm(FormValidationAction):
         for entity in doc.ents:
           if entity.label_ == 'TIME':
             timeEntityValue = entity.text
+      #special cases
+        if timeEntityValue == None:
+          if 'midnight' in slot_value or ' midnight' in slot_value or 'midnight ' in slot_value or ' midnight ' in slot_value:
+              timeEntityValue = 'midnight'
+          if 'morning' in slot_value or ' morning' in slot_value or 'morning ' in slot_value or ' morning ' in slot_value:
+            timeEntityValue = 'morning'
+          if 'evening' in slot_value or ' evening' in slot_value or 'evening ' in slot_value or ' evening ' in slot_value:
+            timeEntityValue = 'evening'
+          if 'afternoon' in slot_value or ' afternoon' in slot_value or 'afternoon ' in slot_value or ' afternoon ' in slot_value:
+            timeEntityValue = 'afternoon'
+          if 'current' in slot_value or ' current' in slot_value or 'current ' in slot_value or ' current ' in slot_value:
+            timeEntityValue = 'current'
+          if 'today' in slot_value or ' today' in slot_value or 'today ' in slot_value or ' today ' in slot_value:
+            timeEntityValue = 'today'
+          if ' now' in slot_value or 'now ' in slot_value or ' now ' in slot_value:
+            timeEntityValue = 'now'
+          if 'right now' in slot_value or ' right now' in slot_value or 'right now ' in slot_value or ' right now ' in slot_value:
+            timeEntityValue = 'right now'
+          if 'present' in slot_value or ' present' in slot_value or ' present ' in slot_value or ' present ' in slot_value:
+            timeEntityValue = 'present'
+          if 'present moment' in slot_value or ' present moment' in slot_value or 'present moment ' in slot_value or ' present moment ' in slot_value:
+            timeEntityValue = 'present moment'
 
         if timeEntityValue != None:
           return {"time_info": timeEntityValue} 
@@ -254,9 +277,10 @@ class SetWeatherAlertActionCheckEntities(Action):
             self.time = entityValue
 
     #se o extrator ainda assim nao pegou(verifica variavel se estao com none)
+    #special cases
       if ' this' in textInput and self.date == None:
         self.date = "today"
-      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None:
+      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None: # 10 pm tomorrow tava ficando junto
         self.date = "tomorrow"
       if ' tonight' in textInput or 'tonight ' in textInput and self.time == None and self.date == None:
         self.date = "today"
@@ -393,6 +417,28 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
       for entity in doc.ents:
         if entity.label_ == 'TIME':
           timeEntityValue = entity.text
+
+      if timeEntityValue == None:
+        if 'midnight' in slot_value or ' midnight' in slot_value or 'midnight ' in slot_value or ' midnight ' in slot_value:
+          timeEntityValue = 'midnight'
+        if 'morning' in slot_value or ' morning' in slot_value or 'morning ' in slot_value or ' morning ' in slot_value:
+            timeEntityValue = 'morning'
+        if 'evening' in slot_value or ' evening' in slot_value or 'evening ' in slot_value or ' evening ' in slot_value:
+          timeEntityValue = 'evening'
+        if 'afternoon' in slot_value or ' afternoon' in slot_value or 'afternoon ' in slot_value or ' afternoon ' in slot_value:
+          timeEntityValue = 'afternoon'
+        if 'current' in slot_value or ' current' in slot_value or 'current ' in slot_value or ' current ' in slot_value:
+          timeEntityValue = 'current'
+        if 'today' in slot_value or ' today' in slot_value or 'today ' in slot_value or ' today ' in slot_value:
+          timeEntityValue = 'today'
+        if ' now' in slot_value or 'now ' in slot_value or ' now ' in slot_value:
+          timeEntityValue = 'now'
+        if 'right now' in slot_value or ' right now' in slot_value or 'right now ' in slot_value or ' right now ' in slot_value:
+          timeEntityValue = 'right now'
+        if 'present' in slot_value or ' present' in slot_value or ' present ' in slot_value or ' present ' in slot_value:
+          timeEntityValue = 'present'
+        if 'present moment' in slot_value or ' present moment' in slot_value or 'present moment ' in slot_value or ' present moment ' in slot_value:
+          timeEntityValue = 'present moment'
 
       if timeEntityValue != None:
         self.time_day_alert = timeEntityValue
