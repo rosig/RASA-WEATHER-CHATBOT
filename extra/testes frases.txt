@@ -2,7 +2,6 @@ Frases GET OK
 Please, help me, what is the weather in Curitiba at night today?
 Please, help me, what is the weather in Brasil at morning next week?
 Hi, my name is João, in Curitiba, what is the weather at morning tomorrow?
-Please I want to know the weather in Brazil at 10 am tomorrow
 Hi, my name is João, in Curitiba, what is the weather tomorrow at morning?
 Hi, my name is João, in Curitiba, what is the weather at 10:12 pm, tomorrow?
 
@@ -20,18 +19,36 @@ Please help me, what is the weather in Curitiba tonight?
 
 Please help me, how is the weather in Curitiba this morning?
 
-Frases GET NOT OK
+weather forcast for current location now 
+
+will the weather be warm far from Niger at 15 o'clock
+Monday
+
+Can you give me weather details for Alabama, today?
+evening
+
 Hi, my name is João, in Curitiba, what is the weather at 10:12 pm tomorrow?
 
 Please I want to know the weather in Brasil tomorrow
 
+Please I want to know the weather in Brazil at 10 am tomorrow
 
-tell me, what is the climate in recife this night
-(nao reocnhece cidade com letra miniscula as vezes... testar)
+I need the weather in Hubbardston, will it be chillier? 
+12 pm
+
+What will the weather be in Federated States Of Micronesia at 00:17 am
+
+Frases GET NOT OK
+
+
+Weather for 09/03/2021 at Recife
+
+What's the weather close to Cambodia at 05:44:13  
+What will be the climate in Arizona at midnight
+
 
 Frase SET OK
 please help me, set to me an alert weather in Brazil at night next week
 
 
 Frases SET NOT OK
-please help me, set to me an alert weather of Brasil at night next week
