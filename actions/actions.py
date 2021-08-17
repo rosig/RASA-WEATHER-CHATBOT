@@ -111,13 +111,7 @@ class ValidateWeatherForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         print("[RUN][validate_where_info]")
 
-        # slot_value = "Hum, " + slot_value
-        # print(slot_value)
-
         data = self.requestAPI(slot_value)
-
-        # random_temp = random.randrange(10, 50)
-        # data = {'main': {'temp': random_temp, 'feels_like': random_temp + random.randrange(-10, 10)}}
 
         if data.get('message') and data['cod'] == '404': #place not found
           print(0)
@@ -164,14 +158,13 @@ class ValidateWeatherForm(FormValidationAction):
 
         dateEntityValue = None
 
+        slot_value = "Hum, " + slot_value
+        print("tokeziner when")
         print(slot_value)
         print(type(slot_value))
 
-          
-        print("tokeziner when")
+        slot_value.lower()
 
-        # print(slot_value)
-        # print(type(slot_value))
 
         nlp = spacy.load('en_core_web_sm')
         doc = nlp(slot_value)
@@ -180,11 +173,28 @@ class ValidateWeatherForm(FormValidationAction):
           if entity.label_ == 'DATE':
             dateEntityValue = entity.text
 
+        if dateEntityValue == None:
+          if 'current' in slot_value or ' current' in slot_value or 'current ' in slot_value or ' current ' in slot_value:
+            dateEntityValue = 'current'
+          if 'today' in slot_value or ' today' in slot_value or 'today ' in slot_value or ' today ' in slot_value:
+            dateEntityValue = 'today'
+          if 'now' in slot_value or ' now' in slot_value or 'now ' in slot_value or ' now ' in slot_value:
+            dateEntityValue = 'now'
+          if 'right now' in slot_value or ' right now' in slot_value or 'right now ' in slot_value or ' right now ' in slot_value:
+            dateEntityValue = 'right now'
+          if 'present' in slot_value or ' present' in slot_value or ' present ' in slot_value or ' present ' in slot_value:
+            dateEntityValue = 'present'
+          if 'present moment' in slot_value or ' present moment' in slot_value or 'present moment ' in slot_value or ' present moment ' in slot_value:
+            dateEntityValue = 'present moment'
+        
+         
+
         if dateEntityValue != None:
           return {"when_info": dateEntityValue, "temp_info": "is {}°C, with feels like of {}ºC".format(self.temp_info, self.temp_feels_like)} 
         else:
           dispatcher.utter_message(text=f"I didn't understand what you said 1 😰")
           return {"when_info": None}
+    
     
     def validate_time_info(  
         self,
@@ -196,12 +206,6 @@ class ValidateWeatherForm(FormValidationAction):
         print("[RUN][validate_time_info]")
 
         timeEntityValue = None
-
-        # slot_value = "Hum, " + slot_value
-       
-        # print(slot_value)
-        # print(type(slot_value))
-
 
         nlp = spacy.load('en_core_web_sm')
         doc = nlp(slot_value)
@@ -222,25 +226,58 @@ class SetWeatherAlertActionCheckEntities(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
       print("🐍 [RUN][action_check_alert_weather_entities]")
-      entities = tracker.latest_message['entities']
-      gpe = None
-      date = None
-      time = None
 
+      self.gpe = None
+      self.date = None
+      self.time = None
+
+      entities = tracker.latest_message['entities']
+      textInput = tracker.latest_message['text']
+
+      print(textInput)
+      textInput = textInput.lower()
+
+      # Special cases need to be done before
+      # if slot_value.contains('now')  
+    
       if len(entities) > 0:
         for entity in entities:
+          
           entityType = entity['entity']
           entityValue = entity['value']
 
           if entityType == 'GPE':
-            gpe = entityValue
+            self.gpe = entityValue
           elif entityType == 'DATE':
-            date = entityValue
+            self.date = entityValue
           elif entityType == 'TIME':
-            time = entityValue
+            self.time = entityValue
 
-      print("🚨 LOCAL:", gpe, "DATA:", date, "HORÁRIO:", time)
-      return[SlotSet("place_alert", gpe), SlotSet("date_alert", date), SlotSet("time_day_alert", time)]
+    #se o extrator ainda assim nao pegou(verifica variavel se estao com none)
+      if ' this' in textInput and self.date == None:
+        self.date = "today"
+      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None:
+        self.date = "tomorrow"
+      if ' tonight' in textInput or 'tonight ' in textInput and self.time == None and self.date == None:
+        self.date = "today"
+        self.time = "evening"
+      if ' night' in textInput or 'night ' in textInput and self.time == None: #pode ser a noite de outro dia...
+        self.time = "evening"
+      if ' night' in textInput or 'night ' in textInput and self.time == None and self.date == None: #senao achei nem o dia, assuma q é hoje
+        self.date = "today"
+        self.time = "evening"
+      if ' now' in textInput or ' now' in textInput and self.time == None and self.date == None :  
+        #deixar com espaco pois tem now e know... que pode dá pau
+        self.date = "today"
+        self.time = "afternoon" # forca aqui ser a tarde
+        # o ideal seria ter um outro tipo de utter_response somente com date e where. Pois na frase nao tem time... mas podemos supor que sempre que nao vier será a tarde...
+
+      if self.date != None and self.time != None:
+        if self.date in self.time:
+          self.time = self.time.replace(self.date, "")
+
+      print("🚨 LOCAL:", self.gpe, "DATA:", self.gpe, "HORÁRIO:", self.gpe)
+      return[SlotSet("place_alert", self.gpe), SlotSet("date_alert", self.gpe), SlotSet("time_day_alert", self.gpe)]
 
 class ValidateSetAlertWeatherForm(FormValidationAction):
     # places = Path("data/locations.txt").read_text().split("\n")
@@ -251,6 +288,16 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_set_weather_alert_form"
 
+  def requestAPI(self, placeName):
+        api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(placeName)
+          
+        try:
+          data = requests.get(api_url).json()
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+          dispatcher.utter_message(text=f"API Error 😰")
+
+        return data
+
     def validate_place_alert(
         self,
         slot_value: Any,
@@ -259,33 +306,41 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         print("[RUN][validate_place_alert]")
-        
-        data = {}
-        api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(slot_value)
-
-        # random_temp = random.randrange(10, 50)
-        # data = {'main': {'temp': random_temp, 'feels_like': random_temp + random.randrange(-10, 10)}}
-
-        try:
-          data = requests.get(api_url).json()
-        except requests.exceptions.RequestException as e:  # This is the correct syntax
-          dispatcher.utter_message(text=f"API Error 😰")
+        data = self.requestAPI(slot_value)
 
         if data.get('message') and data['cod'] == '404': #place not found
+          print(0)
+          placeEntityValue = None
+
+          print("tokeziner where")
+          nlp = spacy.load('en_core_web_sm')
+          doc = nlp(slot_value)
+
+          for entity in doc.ents:
+            if entity.label_ == 'GPE':
+              print("achou GPE")
+              print(entity.text, entity.label_)
+              placeEntityValue = entity.text
+
+          if placeEntityValue != None:
+            data = self.requestAPI(placeEntityValue)
+            
+            if data.get('message') and data['cod'] == '404':
+              print(1)
+              dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
+              return {"place_alert": None}
+
+            self.temp_info = data['main']['temp']
+            self.temp_feels_like = data['main']['feels_like']
+            return {"place_alert": placeEntityValue}
+          
+          print(2)
           dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
           return {"place_alert": None}
         else:
-          # self.temp_info = self.data['main']['temp']
-          # self.temp_feels_like = self.data['main']['feels_like']
-          self.place_alert = slot_value
+          self.temp_info = data['main']['temp']
+          self.temp_feels_like = data['main']['feels_like']
           return {"place_alert": slot_value}
-
-        # if slot_value in self.places:
-        #   self.place_alert = slot_value
-        #   return {"place_alert": slot_value}
-        # else:
-        #   dispatcher.utter_message(text=f"The service is not available at the place you wrote. Please select another place. 🙄")
-        #   return {"place_alert": None}
 
     def validate_date_alert(
         self,
@@ -353,80 +408,3 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
         #   dispatcher.utter_message(text=f"Invalid time format 🚨")
         #   return {"time_day_alert": None}
 
-    # def validate_confirm_alert_form(
-    #     self,
-    #     slot_value: Any,
-    #     dispatcher: CollectingDispatcher,
-    #     tracker: Tracker,
-    #     domain: DomainDict,
-    # ) -> Dict[Text, Any]:
-    #     print("[RUN][validate_confirm_alert_form]")
-
-    #     if slot_value == 'confirm':
-    #       dispatcher.utter_message(text=f"Ok, you will receive an alert at {self.time_day_alert}, on {self.date_alert}, about the weather in {self.place_alert}!")
-    #       return {"confirm_alert_form": 'ok'}
-    #     elif slot_value == 'cancel':
-    #       dispatcher.utter_message(text=f"Okay, your alert was successfully cancelled!")
-    #       return {"confirm_alert_form": 'ok'}
-    #     elif slot_value == 'change_date':
-    #       return {"date_alert": None, "confirm_alert_form": None}
-    #     elif slot_value == 'change_time':
-    #       return {"time_day_alert": None, "confirm_alert_form": None}
-    #     elif slot_value == 'change_place':
-    #       return {"place_alert": None, "confirm_alert_form": None}
-
-# class ActionCheckLocationExistence(Action):
-#     places = Path("data/locations.txt").read_text().split("\n")
-
-#     def name(self) -> Text:
-#       return "action_check_location_existence"
-
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#       print("[RUN][action_check_location_existence]")
-#       for blob in tracker.latest_message['entities']:
-#         if blob['entity'] == 'location_name':
-#           location = blob['value']
-#           if location in self.places:
-#             return[SlotSet("place_info", location)]
-            
-#       return[SlotSet("place_info", None)]
-
-# class ValidateWeatherFormWithLocation(FormValidationAction):
-#     places = Path("data/locations.txt").read_text().split("\n")
-#     place_info = ''
-
-#     def name(self) -> Text:
-#         return "validate_get_weather_with_location_form"
-
-#     def validate_place_info(
-#         self,
-#         slot_value: Any,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: DomainDict,
-#     ) -> Dict[Text, Any]:
-#         print("[RUN][validate_place_info]")
-#         if slot_value in self.places:
-#           self.place_info = slot_value
-#           return {"place_info": slot_value}
-#         else:
-#           return {"place_info": None}
-
-#     def validate_time_info(
-#         self,
-#         slot_value: Any,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: DomainDict,
-#     ) -> Dict[Text, Any]:
-#         print("[RUN][validate_time_info]")
-#         random_temp = random.randrange(10, 50)
-#         if slot_value in ['now','current','today', 'right now', 'present moment', 'present'] :
-#           dispatcher.utter_message(text=f"The weather in {self.place_info}, {slot_value}, is {random_temp}ºC!")
-#           return {"time_info": slot_value}
-#         elif slot_value.lower() in ['next week', 'tomorrow', 'next week', 'next month', 'next year', 'sunday','monday','tuesday','wednesday','thursday','friday','saturday']:
-#           dispatcher.utter_message(text=f"The weather in {self.place_info}, {slot_value}, it will be {random_temp}ºC!")
-#           return {"time_info": slot_value}
-#         else:
-#           dispatcher.utter_message(text=f"I didn't understand what you said, could you repeat it, please? 😰")
-#           return {"time_info": None}
