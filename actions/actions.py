@@ -286,17 +286,17 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
     time_day_alert = ''
 
     def name(self) -> Text:
-        return "validate_set_weather_alert_form"
+      return "validate_set_weather_alert_form"
 
-  def requestAPI(self, placeName):
-        api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(placeName)
-          
-        try:
-          data = requests.get(api_url).json()
-        except requests.exceptions.RequestException as e:  # This is the correct syntax
-          dispatcher.utter_message(text=f"API Error 😰")
+    def requestAPI(self, placeName):
+      api_url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=5cf0a118ed3fb5b03ff1ee5227cf0b4f".format(placeName)
+        
+      try:
+        data = requests.get(api_url).json()
+      except requests.exceptions.RequestException as e:  # This is the correct syntax
+        dispatcher.utter_message(text=f"API Error 😰")
 
-        return data
+      return data
 
     def validate_place_alert(
         self,
@@ -305,42 +305,43 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print("[RUN][validate_place_alert]")
-        data = self.requestAPI(slot_value)
 
-        if data.get('message') and data['cod'] == '404': #place not found
-          print(0)
-          placeEntityValue = None
+      print("[RUN][validate_place_alert]")
+      data = self.requestAPI(slot_value)
 
-          print("tokeziner where")
-          nlp = spacy.load('en_core_web_sm')
-          doc = nlp(slot_value)
+      if data.get('message') and data['cod'] == '404': #place not found
+        print(0)
+        placeEntityValue = None
 
-          for entity in doc.ents:
-            if entity.label_ == 'GPE':
-              print("achou GPE")
-              print(entity.text, entity.label_)
-              placeEntityValue = entity.text
+        print("tokeziner where")
+        nlp = spacy.load('en_core_web_sm')
+        doc = nlp(slot_value)
 
-          if placeEntityValue != None:
-            data = self.requestAPI(placeEntityValue)
-            
-            if data.get('message') and data['cod'] == '404':
-              print(1)
-              dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
-              return {"place_alert": None}
+        for entity in doc.ents:
+          if entity.label_ == 'GPE':
+            print("achou GPE")
+            print(entity.text, entity.label_)
+            placeEntityValue = entity.text
 
-            self.temp_info = data['main']['temp']
-            self.temp_feels_like = data['main']['feels_like']
-            return {"place_alert": placeEntityValue}
+        if placeEntityValue != None:
+          data = self.requestAPI(placeEntityValue)
           
-          print(2)
-          dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
-          return {"place_alert": None}
-        else:
+          if data.get('message') and data['cod'] == '404':
+            print(1)
+            dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
+            return {"place_alert": None}
+
           self.temp_info = data['main']['temp']
           self.temp_feels_like = data['main']['feels_like']
-          return {"place_alert": slot_value}
+          return {"place_alert": placeEntityValue}
+        
+        print(2)
+        dispatcher.utter_message(text=f"I couldn't find the place you wrote. 🙄")
+        return {"place_alert": None}
+      else:
+        self.temp_info = data['main']['temp']
+        self.temp_feels_like = data['main']['feels_like']
+        return {"place_alert": slot_value}
 
     def validate_date_alert(
         self,
@@ -349,31 +350,31 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print("[RUN][validate_date_alert]")
+      print("[RUN][validate_date_alert]")
 
-        dateEntityValue = None
+      dateEntityValue = None
 
-        nlp = spacy.load('en_core_web_sm')
-        doc = nlp(slot_value)
+      nlp = spacy.load('en_core_web_sm')
+      doc = nlp(slot_value)
 
-        for entity in doc.ents:
-          if entity.label_ == 'DATE':
-            dateEntityValue = entity.text
+      for entity in doc.ents:
+        if entity.label_ == 'DATE':
+          dateEntityValue = entity.text
 
-        if dateEntityValue != None:
-          self.date_alert = dateEntityValue
-          return {"date_alert": dateEntityValue}
-        else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 3😰")
-          return {"date_alert": None}
+      if dateEntityValue != None:
+        self.date_alert = dateEntityValue
+        return {"date_alert": dateEntityValue}
+      else:
+        dispatcher.utter_message(text=f"I didn't understand what you said 3😰")
+        return {"date_alert": None}
 
-        # matched = re.match("^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", slot_value)
-        # if bool(matched):
-        #   self.date_alert = slot_value
-        #   return {"date_alert": slot_value}
-        # else:
-        #   dispatcher.utter_message(text=f"Invalid date format 🚨")
-        #   return {"date_alert": None}
+      # matched = re.match("^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", slot_value)
+      # if bool(matched):
+      #   self.date_alert = slot_value
+      #   return {"date_alert": slot_value}
+      # else:
+      #   dispatcher.utter_message(text=f"Invalid date format 🚨")
+      #   return {"date_alert": None}
 
     def validate_time_day_alert(
         self,
@@ -382,29 +383,29 @@ class ValidateSetAlertWeatherForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print("[RUN][validate_time_day_alert]")
+      print("[RUN][validate_time_day_alert]")
 
-        timeEntityValue = None
+      timeEntityValue = None
 
-        nlp = spacy.load('en_core_web_sm')
-        doc = nlp(slot_value)
+      nlp = spacy.load('en_core_web_sm')
+      doc = nlp(slot_value)
 
-        for entity in doc.ents:
-          if entity.label_ == 'TIME':
-            timeEntityValue = entity.text
+      for entity in doc.ents:
+        if entity.label_ == 'TIME':
+          timeEntityValue = entity.text
 
-        if timeEntityValue != None:
-          self.time_day_alert = timeEntityValue
-          return {"time_day_alert": timeEntityValue} 
-        else:
-          dispatcher.utter_message(text=f"I didn't understand what you said 4 😰")
-          return {"time_day_alert": None}
+      if timeEntityValue != None:
+        self.time_day_alert = timeEntityValue
+        return {"time_day_alert": timeEntityValue} 
+      else:
+        dispatcher.utter_message(text=f"I didn't understand what you said 4 😰")
+        return {"time_day_alert": None}
 
-        # matched = re.match(r'^(([01]\d|2[0-3]):([0-5]\d)|24:00)$', slot_value)
-        # if bool(matched):
-        #   self.time_day_alert = slot_value
-        #   return {"time_day_alert": slot_value}
-        # else:
-        #   dispatcher.utter_message(text=f"Invalid time format 🚨")
-        #   return {"time_day_alert": None}
+      # matched = re.match(r'^(([01]\d|2[0-3]):([0-5]\d)|24:00)$', slot_value)
+      # if bool(matched):
+      #   self.time_day_alert = slot_value
+      #   return {"time_day_alert": slot_value}
+      # else:
+      #   dispatcher.utter_message(text=f"Invalid time format 🚨")
+      #   return {"time_day_alert": None}
 
