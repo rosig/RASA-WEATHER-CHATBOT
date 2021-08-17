@@ -190,6 +190,7 @@ nlu:
       - Tell me if it will be hot on June the 10th in San de Fuca, Sweden
       - Will it be chilly at 4:20 pm in Druid Hills AMerican Samoa?
       - Weather for [09/03/2021](DATE) at [Recife](GPE)
+      - I want to know the climate, in [Tokyo](GPE), [today](DATE) in the [morning](TIME), I will have a fight there
       - Weather for june ninth, 2033 in San Pierre Romania
       - Find the weather prediction for Dubai on tuesday on 10 pm
       - weather forcast for current location [now](DATE)
