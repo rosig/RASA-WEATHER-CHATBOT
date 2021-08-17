@@ -30,3 +30,5 @@ Can you use also, a venv, virtual environment, if you want. In this case, so,
 create a venv, before all of it, and then, run:
 
 source ./venv/bin/activate
+
+Additional reading: https://towardsdatascience.com/build-a-conversational-assistant-with-rasa-b410a809572d
