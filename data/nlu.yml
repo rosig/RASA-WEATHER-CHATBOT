@@ -200,15 +200,15 @@ nlu:
       - What will the weather be in Federated States Of Micronesia at 00:17 am
       - Hi, my name is João, in [Rio de Janeiro](GPE), what is the weather at [10:12 pm](DATE), [now](TIME)?
       - Today I will make a trip, so I want to know what is the temperature in [Alaska](GPE), [tomorrow](DATE) at [10 am](TIME) 
-      - What is the feels like in [Recife](GPE) in [the morning](TIME) [next year](DATE)?
+      - What is the feels like in [Recife](GPE) in the [morning](TIME) [next year](DATE)?
       - Will it be colder in San Pablo today?
-      - What is the climate like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
-      - What is the temperature like in [Natal](GPE) in [the morning](TIME), [tomorrow](DATE)?
-      - weather like in [João Pessoa](GPE), in [the afternoon](TIME), [next year](DATE)?
-      - What is the weather like in [Acre](GPE) in [the afternoon](TIME) [next week](DATE)?
+      - What is the climate like in [Camaragibe](GPE) in the [morning](TIME) [next week](DATE)?
+      - What is the temperature like in [Natal](GPE) at [evening](TIME), [tomorrow](DATE)?
+      - weather like in [João Pessoa](GPE), in the [afternoon](TIME), [next year](DATE)?
+      - What is the weather like in [Acre](GPE) in the [afternoon](TIME) [next week](DATE)?
       -  Is it going to be cold [today](DATE) in [Venezuela](GPE)?
       - Tell me the predicted weather once I travel faraway to Chapada Diamantina
-      - What is the climate in [São Paulo](GPE) in [the afternoon](TIME) [tomorrow](DATE)?
+      - What is the climate in [São Paulo](GPE) in the [afternoon](TIME) [tomorrow](DATE)?
       - What is the weather in [Brasília](GPE), at [night](TIME), [next year](DATE)?
       - weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
       - Check the weather for Eagle Harbor
@@ -247,7 +247,7 @@ nlu:
       - What is the weather like at [Munich](GPE) at [4 pm](TIME)
       - Hi, my name is João, in [Curitiba](GPE), what is the weather at [10:12 pm](TIME), [tomorrow](DATE)?
       - Hey, I will have a test in [Seabra](GPE), what is the weather at [10:12 pm](TIME) [tomorrow](DATE)?
-      - Please, what is the weather like in [Camaragibe](GPE) in [the morning](TIME) [next week](DATE)?
+      - Please, what is the weather like in [Camaragibe](GPE) in the [morning](TIME) [next week](DATE)?
       - What is the weather for Yemen 
       - May you give me the weather forecast in Tajikistan?
       - Please, what is the weather at [14:00 am](TIME)
