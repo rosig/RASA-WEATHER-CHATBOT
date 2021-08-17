@@ -77,6 +77,62 @@ nlu:
       - i am frustated
       - i am not happy
       - i dont want to talk
+      - is it true that nicotine is harder to kick than heroin
+      - please inform me on bad habits and overcoming them
+      - are bad habits closely related with addictions
+      - does hypnosis work to break bad habits
+      - king of acid
+      - what cryptocurrency gained the most in 2018
+      - what's the best crypto to buy in 2019
+      - how is crypto legal
+      - are there any cybersecurity jobs available in pittsburgh
+      - how many firewalls should i have and what type
+      - how can i breach a network
+      - how does cybersecurity work
+      - how many countries in the world are democracies
+      - which nations are not democratic
+      - is the united states a democracy
+      - what university in the united states offers the best biomedical engineering program
+      - what's the definition of nuclear engineering
+      - when was electrical engineering created
+      - what is naval engineering
+      - is it possible to survive in a black hole
+      - where do black holes come from
+      - what are black holes
+      - what was the final vote count in the brexit referendum
+      - can you tell me the latest georgia news
+      - is the brexit finalized yet
+      - the birds fly with there wings
+      - where does cannabis originate from
+      - how the birds fly
+      - how are my cannabis stocks doing
+      - should i hit or stay at 17 in blackjack
+      - what game has the best odds at a casino
+      - what's the best opening gambit for a game of chess
+      - is marijuana addictive
+      - what side in chess has the general advantage
+      - how do i get better at go
+      - how high does my sat score need to be to get into harvard
+      - what'll an education at boulder state college run
+      - what's the average gpa to get into yale
+      - what act score is considered good
+      - how does a democracy work
+      - please get me my wheelchair
+      - what's the best dog food to feed my puppy
+      - how do you know when your dog is ill
+      - what dog breed sold the most in 2018
+      - how much food should i feed my cat
+      - what does it mean if i dream of falling off a building
+      - is it bad to not remember your dreams
+      - why do we dream
+      - what is the friendliest breed
+      - what do geese eat
+      - do ducks sleep
+      - are over the ear headphones better than in ear headphones
+      - what brand of earphones is the best reviewed of 2019
+      - are white and brown eggs any different
+      - where do eggs come from
+      - how can i easily replace a string on my guitar
 
   - intent: bot_challenge
     examples: |
@@ -133,7 +189,7 @@ nlu:
       - will the weather be warm far from Niger at 15 o'clock
       - Tell me if it will be hot on June the 10th in San de Fuca, Sweden
       - Will it be chilly at 4:20 pm in Druid Hills AMerican Samoa?
-      - Weather for [09/03/2021](DATE) at [Brasília](GPE)
+      - Weather for [09/03/2021](DATE) at [Recife](GPE)
       - Weather for june ninth, 2033 in San Pierre Romania
       - Find the weather prediction for Dubai on tuesday on 10 pm
       - weather forcast for current location [now](DATE)
@@ -156,6 +212,7 @@ nlu:
       - What is the weather in [Brasília](GPE), at [night](TIME), [next year](DATE)?
       - weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
       - Check the weather for Eagle Harbor
+      - What is the weather like in [Recife](GPE) at [10 am](TIME) [tomorrow](DATE)?
       - What is the weather in [Itamaracá](GPE) at [night](TIME) [tomorrow](DATE)?
       - What is the weather like in [Recife](GPE) at [10:00 am](TIME) [tomorrow](DATE)?
       - Forecase for [Ohio](GPE) 
@@ -167,8 +224,10 @@ nlu:
       - Ho warm is it in [Angola](GPE)?
       - I need the weather in Hubbardston, will it be chillier?
       - Will it be sunny in [Spain](GPE) on [02/06/2023](DATE)?
+      - tell me, what is the climate in [recife](GPE) this [night](TIME)
       - tell me, what is the climate in [Recife](GPE) this [night](TIME)
       - Gives me the feel of [Recife](GPE)
+      - Hi, my name is Juliano, in [Califórnia](GPE), what is the weather [at morning](TIME) [tomorrow](DATE)?
       - Would you give me the weather forecast in India?
       - Tell me if will there a snowstorm in Clifton Forge
       - I need to know some forecasting info [tomorrow](DATE) [night](TIME)
