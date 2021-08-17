@@ -65,40 +65,40 @@ slots:
     influence_conversation: true
 responses:
   utter_greet:
-    - text: Hey! How can I help you?
+    - text: Hey! How can I help you? 😁
   utter_did_that_help:
-    - text: Did that help you?
+    - text: Did that help you? 😁
   utter_happy:
-    - text: Great, i am happy to help UFPE' students to know more PLN content, carry on!
+    - text: Great, i am happy to help UFPE' students to know more PLN content, carry on! 🥳
   utter_goodbye:
     - text: Bye, bye, have a nice day! 👋
   utter_iamabot:
     - text: I am a bot, created by Rasa and improved by Rosinaldo, Juliano and Luciano. Unfortanaly, my domain is only about weather. I am not like GPT-3. 🤖
   utter_please_rephrase:
-    - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+    - text: I'm sorry, I didn't quite understand that. Could you rephrase? 🥺
   utter_out_of_scope:
-    - text: Sorry, I can't handle that request.
+    - text: Sorry, I can't handle that request. 😔
   utter_ask_where_info:
-    - text: If you told me where, I dont understand it, or it is out of my scope of localizations. Do you want to know the weather from where?
+    - text: If you told me where, I dont understand it, or it is out of my scope of localizations. Do you want to know the weather from where? 🌎
   utter_ask_when_info:
-    - text: When (now, today, tomorrow, next week, 12/12/2021, etc)? 🗓️
+    - text: When (now, today, tomorrow, next week, monday, june 24th, 12/12/2021, ...)? 🗓️
   utter_response_get_weather:
     - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}! 🌡
   utter_ask_time_info:
-    - text: The weather at what time of day? ⏰
+    - text: The weather at what time of day(At morning, 7:00 AM, ...)? ⏰
   utter_ask_place_alert:
-    - text: Do you want an alert from which place?
+    - text: Do you want an alert from which place? 🌎
   utter_ask_date_alert:
-    - text: What date do you want to receive the alert (dd/mm/yyyy)? 🗓️
+    - text: What date do you want to receive the alert (June 23th, Tuesday, dd/mm/yyyy, ...)? 🗓️
   utter_ask_time_day_alert:
-    - text: What time of day can we send the alert? ⏰
+    - text: What time of day can we send the alert (Morning, 7:00 AM, ...)? ⏰
   utter_response_set_alert_weather:
     - text: |
         ✅ Okay, weather alert scheduled successfully
         🚨 The alert about {place_alert} will be sent on the date and time below
         🗓️ Date: {date_alert}
         ⏰ Time: {time_day_alert}
-        See you later!
+        See you later! 💜
   utter_select_chatbot_action:
     - text: "Hi! What's up?"
       buttons:
