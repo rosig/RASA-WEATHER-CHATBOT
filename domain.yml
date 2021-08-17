@@ -85,7 +85,7 @@ responses:
   utter_response_get_weather:
     - text: The weather in {where_info}, {when_info}, at {time_info}, {temp_info}! 🌡
   utter_ask_time_info:
-    - text: The weather at what time of day(At morning, 7:00 AM, ...)? ⏰
+    - text: The weather at what time of day(Morning, 7:00 AM, ...)? ⏰
   utter_ask_place_alert:
     - text: Do you want an alert from which place? 🌎
   utter_ask_date_alert:
