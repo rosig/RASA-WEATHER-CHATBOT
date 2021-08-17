@@ -61,7 +61,9 @@ class GetWeatherActionCheckEntities(Action):
     #se o extrator ainda assim nao pegou(verifica variavel se estao com none)
       if ' this' in textInput and self.date == None:
         self.date = "today"
-      if ' tonight' in textInput or'tonight ' in textInput and self.time == None and self.date == None:
+      if ' tomorrow' in textInput or 'tomorrow ' in textInput and self.date == None:
+        self.date = "tomorrow"
+      if ' tonight' in textInput or 'tonight ' in textInput and self.time == None and self.date == None:
         self.date = "today"
         self.time = "evening"
       if ' night' in textInput or 'night ' in textInput and self.time == None: #pode ser a noite de outro dia...
@@ -69,11 +71,15 @@ class GetWeatherActionCheckEntities(Action):
       if ' night' in textInput or 'night ' in textInput and self.time == None and self.date == None: #senao achei nem o dia, assuma q é hoje
         self.date = "today"
         self.time = "evening"
-      if ' now' in textInput and self.time == None and self.date == None :  
+      if ' now' in textInput or ' now' in textInput and self.time == None and self.date == None :  
         #deixar com espaco pois tem now e know... que pode dá pau
         self.date = "today"
-        self.time = "afternoon" # forcar sair a tarde
+        self.time = "afternoon" # forca aqui ser a tarde
         # o ideal seria ter um outro tipo de utter_response somente com date e where. Pois na frase nao tem time... mas podemos supor que sempre que nao vier será a tarde...
+
+      if self.date != None and self.time != None:
+        if self.date in self.time:
+          self.time = self.time.replace(self.date, "")
 
 
       print("🚨 LOCAL:", self.gpe, "DATA:", self.date, "HORÁRIO:", self.time)
