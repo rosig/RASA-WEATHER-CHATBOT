@@ -1,0 +1,212 @@
+version: "2.0"
+nlu:
+- intent: chatbot_actions
+  examples: |
+    - i want to know the chatbot actions
+    - chatbot actions
+    - show me chatbot actions
+    - actions chatbot
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a human?
+    - am I talking to a bot?
+    - i know you are a bot
+    - are you really clever?
+    - are you a alan turing machine?
+    - i am in a turing test?
+- intent: goodbye
+  examples: |
+    - bye
+    - cee you later
+    - see you around
+    - see you in soon
+    - good night
+    - bye bye
+    - good by
+    - have a nice day
+    - goodbye
+    - xoxoxo
+- intent: greet
+  examples: |
+    - yo
+    - let's go
+    - hi
+    - heyo
+    - good morning
+    - hello
+    - hey there
+    - good afternoon
+    - hey dude
+    - goodmorning
+    - hey
+    - moin
+- intent: set_weather_alert
+  examples: |
+    - please help me, set to me an alert weather of [Brasil](GPE) at [night](TIME) [next week](DATE)
+    - configure alert
+    - set alert for me?
+    - build alert
+    - may you set a weather alert for [today](DATE) [11 pm](TIME) about [Canada](GPE)
+    - schedule alert
+    - set alert
+    - set weather alert
+    - could you please, configure out an alert to me?
+    - configure weather alert
+    - set [Recife](GPE) temperature alert at [10 am](TIME) (tomorrow)(DATE)
+    - I want to set a climate alert for [tomorrow](DATE) [night](TIME) about [Chile](GPE)
+    - make a weather alert for [Olinda](GPE) [monday](DATE) [night](TIME)
+    - please, set to me a weather alert
+    - I want to set a temperature alert for [tomorrow](DATE) [night](TIME) about [São Paulo](GPE)
+    - remember me with an alert
+    - make a weather alert for [Pernambuco](GPE) [tomorrow](DATE) [afternoon](TIME)
+    - set [Cuba](GPE) weather alert at [10 am](TIME) (tomorrow)(DATE)
+    - create weather alert
+    - i would like to set an alert
+- intent: get_weather
+  examples: |
+    - What's the weather this month in [Mozambique](GPE)
+    - Can you give me weather details for Alabama, today?
+    - I need to know some forecasting info [tomorrow](DATE) [night](TIME)
+    - Give me a forecast for Carol City
+    - What's the weather in [Timbo](GPE)?
+    - What is the feels like in [Recife](GPE) in the [morning](TIME) [next year](DATE)?
+    - Please, what is the weather at [14:00 am](TIME)
+    - What is the weather like in [Recife](GPE) at [10 am](TIME) [tomorrow](DATE)?
+    - What's the weather like [next year](DATE)?
+    - I want to know the weather
+    - What's the weather looking like right now in Croatia?
+    - Tell me the weather forecast for Niue
+    - Weather for [09/03/2021](DATE) at [Recife](GPE)
+    - What is the weather like in [Recife](GPE) at [10:00 am](TIME) [tomorrow](DATE)?
+    - Weather for [January 7th](DATE) in [North Carolina](GPE), [12 PM](TIME)
+    - Tell me if will there a snowstorm in Clifton Forge
+    - Tell me if it will be hot on June the 10th in San de Fuca, Sweden
+    - What is the weather like in Colorado?
+    - Would you give me the weather forecast in India?
+    - weather information
+    - Please, what is the weather like in [Camaragibe](GPE) in the [morning](TIME) [next week](DATE)?
+    - tell me the weather
+    - What is the temperature in [Cuba](GPE)?
+    - What's the weather [tomorrow](DATE) [night](TIME)?
+    - Check the weather for Eagle Harbor
+    - what is the weather?
+    - How is the weather in Minnesota?
+    - Weather for june ninth, 2033 in San Pierre Romania
+    - What is the weather looking like in Russia on february 18th?
+    - Help me please, what's the weather?
+    - What is the temperature like in [Natal](GPE) at [evening](TIME), [tomorrow](DATE)?
+    - I have a question about the climate in [Canadá](GPE)
+    - May you give me the weather forecast in Tajikistan?
+    - weather like in [João Pessoa](GPE), in the [afternoon](TIME), [next year](DATE)?
+    - What is the weather forecast for Djibouti
+    - What is the weather in [Brasília](GPE), at [night](TIME), [next year](DATE)?
+    - About [México](GPE), what is the climate?
+    - Hi, my name is João, in [Rio de Janeiro](GPE), what is the weather at [10:12 pm](DATE), [now](TIME)?
+    - Will it be colder in San Pablo today?
+    - - What are the weather conditions going to be like in Manhasset
+    - I want to know the climate, in [Tokyo](GPE), [today](DATE) in the [morning](TIME), I will have a fight there
+    - tell me, what is the climate in [Recife](GPE) this [night](TIME)
+    - What is the weather in [Mato Grosso](GPE) at [22:15 pm](TIME) am [next week](DATE)?
+    - Will it be sunny in [Spain](GPE) on [02/06/2023](DATE)?
+    - What is the weather for Yemen
+    - Please, give me the feel of [Recife](GPE)
+    - Tell me the predicted weather once I travel faraway to Chapada Diamantina
+    - What is the weather like at [Munich](GPE) at [4 pm](TIME)
+    - give me weather
+    - What will the weather be in Federated States Of Micronesia at 00:17 am
+    - Hi, my name is João, in [Curitiba](GPE), what is the weather at [10:12 pm](TIME), [tomorrow](DATE)?
+    - Today I will make a trip, so I want to know what is the temperature in [Alaska](GPE), [tomorrow](DATE) at [10 am](TIME)
+    - What is the weather like in [Recife](GPE) in the [afternoon](TIME)?
+    - Ho warm is it in [Angola](GPE)?
+    - Hey, I will have a test in [Seabra](GPE), what is the weather at [10:12 pm](TIME) [tomorrow](DATE)?
+    - What will the weather be this month in Wesley Hills?
+    - what is the forecast in [Recife](GPE) at [night](TIME)?
+    - What is the climate in [São Paulo](GPE) in the [afternoon](TIME) [tomorrow](DATE)?
+    - Is it going to be cold [today](DATE) in [Venezuela](GPE)?
+    - Forecase for [Ohio](GPE)
+    - Check the forecast for [Santa Catarina](GPE)
+    - What is the weather in [Itamaracá](GPE) at [night](TIME) [tomorrow](DATE)?
+    - Will it be chilly at 4:20 pm in Druid Hills AMerican Samoa?
+    - How chilly will it get here?
+    - Hi, my name is Juliano, in [Califórnia](GPE), what is the weather [at morning](TIME) [tomorrow](DATE)?
+    - What is the climate like in [Camaragibe](GPE) in the [morning](TIME) [next week](DATE)?
+- intent: out_of_scope
+  examples: |
+    - what side in chess has the general advantage
+    - what do geese eat
+    - I'm so sad
+    - how high does my sat score need to be to get into harvard
+    - how is crypto legal
+    - do ducks sleep
+    - should i hit or stay at 17 in blackjack
+    - the birds fly with there wings
+    - what cryptocurrency gained the most in 2018
+    - what dog breed sold the most in 2018
+    - where does cannabis originate from
+    - unhappy
+    - how many firewalls should i have and what type
+    - how does cybersecurity work
+    - what was the final vote count in the brexit referendum
+    - What is 2 + 2?
+    - i dont want to talk
+    - are over the ear headphones better than in ear headphones
+    - what brand of earphones is the best reviewed of 2019
+    - so sad
+    - my day was horrible
+    - what is naval engineering
+    - how do i get better at go
+    - where do black holes come from
+    - not good
+    - I hate you, faggot
+    - i am not happy
+    - what's the best opening gambit for a game of chess
+    - is marijuana addictive
+    - Who's the US President?
+    - so saad
+    - is it possible to survive in a black hole
+    - what's the best dog food to feed my puppy
+    - what's the best crypto to buy in 2019
+    - how much food should i feed my cat
+    - are bad habits closely related with addictions
+    - what's the average gpa to get into yale
+    - please inform me on bad habits and overcoming them
+    - what does it mean if i dream of falling off a building
+    - how many countries in the world are democracies
+    - i am frustated
+    - is the brexit finalized yet
+    - i love you
+    - very sad
+    - why do we dream
+    - how the birds fly
+    - how can i easily replace a string on my guitar
+    - how are my cannabis stocks doing
+    - what act score is considered good
+    - sad
+    - Do I want to make an appointment?
+    - how do you know when your dog is ill
+    - buy a car
+    - I am sad
+    - Make a reservation
+    - how does a democracy work
+    - what'll an education at boulder state college run
+    - What is the movie?
+    - is it bad to not remember your dreams
+    - is it true that nicotine is harder to kick than heroin
+    - can you tell me the latest georgia news
+    - i am disconsolate
+    - does hypnosis work to break bad habits
+    - what's the definition of nuclear engineering
+    - please get me my wheelchair
+    - What color is mars?
+    - Give me a movie?
+    - where do eggs come from
+    - what game has the best odds at a casino
+    - when was electrical engineering created
+    - 3 + 34 * 100
+    - I m well
+    - I m good
+    - how can i breach a network
+    - I want to order food
+    - God is love

@@ -1,0 +1,65 @@
+version: "2.0"
+nlu:
+- intent: chatbot_actions
+  examples: |
+    - actions of chatbot
+    - what is the chatbot actions
+- intent: bot_challenge
+  examples: |
+    - Do you understand me?
+    - are you really intelligent?
+- intent: goodbye
+  examples: |
+    - cu
+    - see you later
+- intent: greet
+  examples: |
+    - hello there
+    - goodevening
+    - good evening
+- intent: set_weather_alert
+  examples: |
+    - I want to set a weather alert for [next week](DATE) [night](TIME) about [Canada](GPE)
+    - configure [Manaus](GPE) weather alert at [12 am](TIME) (today)(DATE)
+    - could you create an alert to me?
+    - create alert
+    - schedule weather alert
+- intent: get_weather
+  examples: |
+    - Find the weather prediction for Dubai on tuesday on 10 pm
+    - tell me, what is the climate in [recife](GPE) this [night](TIME)
+    - tell me the weather in [Recife](GPE)
+    - Gives me the feel of [Recife](GPE)
+    - Please, help me, what is the weather in [Pernambuco](GPE) at [morning](TIME) [next week](DATE)?
+    - Please, help me, what is the weather in [Curitiba](GPE) at [night](TIME) [today](DATE)?
+    - How is faraway temperature at 02:45 am in Brumley?
+    - Will it be warm in Guinea-Bissau
+    - weather forcast for current location [now](DATE)
+    - Please, weather information at [12:00](TIME)
+    - Will there be a blizzard at a [4:00 AM](TIME) in [Sky Valley](GPE)
+    - I need the weather in Hubbardston, will it be chillier?
+    - will the weather be warm far from Niger at 15 o'clock
+    - weather in [Olinda](GPE) at [night](TIME) [next week](DATE)?
+    - Will it be warmer in Los Angeles on monday?
+    - What is the weather like in [Acre](GPE) in the [afternoon](TIME) [next week](DATE)?
+- intent: out_of_scope
+  examples: |
+    - bad day
+    - which nations are not democratic
+    - Im good
+    - what is the friendliest breed
+    - Who owns PSG?
+    - are white and brown eggs any different
+    - I don't feel very well
+    - Butterflies are colorful.
+    - what university in the united states offers the best biomedical engineering program
+    - not very good
+    - king of acid
+    - what are black holes
+    - are there any cybersecurity jobs available in pittsburgh
+    - super sad
+    - Where is Brazil?
+    - extremly sad
+    - is the united states a democracy
+    - What is a house?
+    - I am disappointed
