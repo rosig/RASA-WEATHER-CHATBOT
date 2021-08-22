@@ -1,0 +1,114 @@
+[
+  {
+    "text": "can you tell me the latest georgia news",
+    "intent": "out_of_scope",
+    "intent_prediction": {
+      "name": "get_weather",
+      "confidence": 0.9999661445617676
+    }
+  },
+  {
+    "text": "Do you understand me?",
+    "intent": "bot_challenge",
+    "intent_prediction": {
+      "name": "out_of_scope",
+      "confidence": 0.9999998211860657
+    }
+  },
+  {
+    "text": "make a weather alert for Pernambuco tomorrow afternoon",
+    "intent": "set_weather_alert",
+    "intent_prediction": {
+      "name": "get_weather",
+      "confidence": 0.984167754650116
+    }
+  },
+  {
+    "text": "let's go",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "out_of_scope",
+      "confidence": 0.9999997615814209
+    }
+  },
+  {
+    "text": "good afternoon",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "set_weather_alert",
+      "confidence": 0.5819149017333984
+    }
+  },
+  {
+    "text": "what'll an education at boulder state college run",
+    "intent": "out_of_scope",
+    "intent_prediction": {
+      "name": "get_weather",
+      "confidence": 0.9784846901893616
+    }
+  },
+  {
+    "text": "good by",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "out_of_scope",
+      "confidence": 0.9982764720916748
+    }
+  },
+  {
+    "text": "good night",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.942147433757782
+    }
+  },
+  {
+    "text": "king of acid",
+    "intent": "out_of_scope",
+    "intent_prediction": {
+      "name": "bot_challenge",
+      "confidence": 0.4630718529224396
+    }
+  },
+  {
+    "text": "have a nice day",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "out_of_scope",
+      "confidence": 0.9999692440032959
+    }
+  },
+  {
+    "text": "xoxoxo",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.9999582767486572
+    }
+  },
+  {
+    "text": "please inform me on bad habits and overcoming them",
+    "intent": "out_of_scope",
+    "intent_prediction": {
+      "name": "get_weather",
+      "confidence": 0.5545464158058167
+    }
+  },
+  {
+    "text": "cu",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.9960005283355713
+    }
+  },
+  {
+    "text": "please help me, set to me an alert weather of Brasil at night next week",
+    "intent": "set_weather_alert",
+    "intent_prediction": {
+      "name": "get_weather",
+      "confidence": 0.8900763392448425
+    }
+  }
+]
